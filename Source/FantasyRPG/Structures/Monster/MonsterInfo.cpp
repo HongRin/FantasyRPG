@@ -1,0 +1,2 @@
+#include "MonsterInfo.h"
+

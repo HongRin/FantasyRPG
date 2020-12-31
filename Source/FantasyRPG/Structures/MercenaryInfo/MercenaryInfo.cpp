@@ -1,0 +1,2 @@
+#include "MercenaryInfo.h"
+
