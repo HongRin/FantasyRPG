@@ -94,7 +94,6 @@ bool AMonsterController::IsPlayerNearby()
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("PlayerIsNearby"), nearby);
 
-
 	return nearby;
 }
 

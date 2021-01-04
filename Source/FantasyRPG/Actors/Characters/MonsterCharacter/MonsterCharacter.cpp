@@ -22,7 +22,7 @@ AMonsterCharacter::AMonsterCharacter()
 {
 	// DT_EnemyData Asset Load
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MONSTER_DATA(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_MonsterDataTable.DT_MonsterDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_MonsterInfo.DT_MonsterInfo'"));
 	if (DT_MONSTER_DATA.Succeeded()) MonsterDatatable = DT_MONSTER_DATA.Object;
 
 	SetGenericTeamId(TEAM_MONSTER);
@@ -152,6 +152,7 @@ void AMonsterCharacter::InitializeMonsterDataConstructTime()
 	// SkeletalMesh Initialization
 	InitializeSkeletalMeshComponent();
 	
+
 	// Set up the Widget Location
 	MonsterWidget->SetWidgetHeight(
 		GetCapsuleComponent()->GetScaledCapsuleHalfHeight() + 30.0f);
@@ -168,4 +169,3 @@ bool AMonsterCharacter::IsMovable() const
 		
 		&& !bIsDie;
 }
-

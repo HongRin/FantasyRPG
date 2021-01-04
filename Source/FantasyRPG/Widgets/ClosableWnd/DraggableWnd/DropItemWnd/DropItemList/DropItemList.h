@@ -10,12 +10,15 @@ class FANTASYRPG_API UDropItemList : public UUserWidget
 	GENERATED_BODY()
 
 private:
+	class UItemDropWnd* ItemDropWnd;
+
 	class UDataTable* DT_ItemInfo;
 
 	FName ItemCode;
 	int32 ItemCount;
 
 private:
+	class UImage* Image_SlotBackground;
 	class UImage* Image_ItemSprite;
 	class UTextBlock* Text_ItemCount;
 	class UTextBlock* Text_ItemName;
@@ -34,4 +37,9 @@ private :
 
 public:
 	void InitializeDropItem(FName itemCode, int32 itemCount);
+
+	FORCEINLINE void SetItemDropWnd(class UItemDropWnd* itemDropWnd)
+	{
+		ItemDropWnd = itemDropWnd;
+	}
 };

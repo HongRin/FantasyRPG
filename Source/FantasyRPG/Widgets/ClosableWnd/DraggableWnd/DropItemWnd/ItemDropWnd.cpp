@@ -47,6 +47,8 @@ void UItemDropWnd::InitializeRootItems(TArray<FItemSlotInfo> items)
 		UDropItemList* dropItemSlot = CreateWidget<UDropItemList>(this, DropItemListClass);
 		GridPanel_DropItemList->AddChild(dropItemSlot);
 
+		dropItemSlot->SetItemDropWnd(this);
+
 		UGridSlot* gridSlot = Cast<UGridSlot>(dropItemSlot->Slot);
 		gridSlot->SetColumn(i % 2);
 		gridSlot->SetRow(i / 2);
@@ -65,12 +67,12 @@ void UItemDropWnd::ItemAllDrop()
 
 	for (int32 i = 0; i < Items.Num(); ++i)
 	{
-		// 아이템 얻기에 성공했다면
-		if (playerInventory->AddItem(Items[i].ItemCode, Items[i].ItemCount))
 
-			// 제거할 아이템 인덱스를 저장합니다.
+		if (Items[i].ItemCode == FName(TEXT("")) && Items[i].ItemCount == 0)
 			destroyItemInfo.Add(Items[i]);
-
+		// 아이템 얻기에 성공했다면
+		else if (playerInventory->AddItem(Items[i].ItemCode, Items[i].ItemCount))
+			destroyItemInfo.Add(Items[i]);
 		// 아이템 얻기에 실패했다면 반복 종료
 		else break;
 	}

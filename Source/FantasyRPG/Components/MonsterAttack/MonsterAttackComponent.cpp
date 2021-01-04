@@ -63,7 +63,7 @@ void UMonsterAttackComponent::ActiveMonsterAttackRange()
 		GetWorld(),
 		MonsterCharacter->GetActorLocation(),
 		MonsterCharacter->GetActorLocation() + (MonsterCharacter->GetActorForwardVector() * attackRange),
-		100.0f,
+		MonsterCharacter->GetMonsterInfo()->AttRange,
 		TEXT("AttackRange"),
 		true,
 		actorsToIgnore,

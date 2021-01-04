@@ -28,4 +28,7 @@ public :
 protected :
 	virtual void Interaction() override;
 
+public :
+	FORCEINLINE void ItemEmpty(int32 index)
+	{ Items[index] = FItemSlotInfo(); }
 };

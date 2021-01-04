@@ -37,6 +37,17 @@ public:
 		DropItemInstance = dropItemInstance;
 	}
 
+	FORCEINLINE const TArray<FItemSlotInfo>& GetDropItems() const
+	{ return Items; }
+
+	FORCEINLINE class ADropItem* GetDropItemInstance() const
+	{ return DropItemInstance; }
+
+	FORCEINLINE void DropItemEmpty(int32 index)
+	{
+		Items[index] = FItemSlotInfo();
+	}
+
 private:
 	UFUNCTION()
 		void ItemAllDrop();

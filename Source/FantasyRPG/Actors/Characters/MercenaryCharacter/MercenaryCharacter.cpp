@@ -79,7 +79,6 @@ void AMercenaryCharacter::InitializeComponent()
 	PlayerDetector = CreateDefaultSubobject<UPlayerDetectorComponent>(TEXT("PLAYER_DETECTOR"));
 	PlayerDetector->SetupAttachment(GetRootComponent());
 
-
 	MercenaryAttack = CreateDefaultSubobject<UMercenaryAttackComponent>(TEXT("ATTACK_COMPONENT"));
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("MercenaryCollision"));
