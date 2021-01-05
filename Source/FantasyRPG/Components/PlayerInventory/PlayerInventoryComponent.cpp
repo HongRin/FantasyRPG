@@ -20,11 +20,12 @@ UPlayerInventoryComponent::UPlayerInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_EQUIP_ITEM_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_EquipItemDataTable.DT_EquipItemDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_EquipItemInfo.DT_EquipItemInfo'"));
 	if (DT_EQUIP_ITEM_INFO.Succeeded()) DTEquipItemInfo = DT_EQUIP_ITEM_INFO.Object;
+	else { UE_LOG(LogTemp, Error, TEXT("PlayerInventoryComponent.cpp :: %d LINE :: DT_EQUIP_ITEM_INFO is not loaded!"), __LINE__); }
 
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_ITEM_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfoDataTable.DT_ItemInfoDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfo.DT_ItemInfo'"));
 	if (DT_ITEM_INFO.Succeeded()) DTItemInfo = DT_ITEM_INFO.Object;
 	else { UE_LOG(LogTemp, Error, TEXT("PlayerInventoryComponent.cpp :: %d LINE :: DT_ITEM_INFO is not loaded!"), __LINE__); }
 }

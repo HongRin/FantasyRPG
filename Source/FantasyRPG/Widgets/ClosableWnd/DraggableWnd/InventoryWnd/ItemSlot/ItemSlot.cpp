@@ -35,7 +35,7 @@ UItemSlot::UItemSlot(const FObjectInitializer& ObjectInitializer) :
 		ItemDetailWndClass = BP_ITEM_DETAIL_WND.Class;
 
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_ITEM_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfoDataTable.DT_ItemInfoDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfo.DT_ItemInfo'"));
 
 	if (DT_ITEM_INFO.Succeeded())
 		DT_ItemInfo = DT_ITEM_INFO.Object;

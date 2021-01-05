@@ -21,7 +21,7 @@ UReinforceWndRow::UReinforceWndRow(const FObjectInitializer& objInitializer) :
 	Super(objInitializer)
 {
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_EQUIP_ITEM_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_EquipItemDataTable.DT_EquipItemDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_EquipItemInfo.DT_EquipItemInfo'"));
 
 	if (DT_EQUIP_ITEM_INFO.Succeeded())
 	{

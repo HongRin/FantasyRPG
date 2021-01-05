@@ -25,6 +25,9 @@ public :
 	FSoftObjectPath AnimInstanceClassPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FSoftObjectPath AIControllerClassPath;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FText MonsterName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -43,5 +46,5 @@ public :
 	float Atk;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "5000.0", ClampMin = "0.0", ClampMax = "5000.0"))
-	float AttRange;
+	float AtkRange;
 };

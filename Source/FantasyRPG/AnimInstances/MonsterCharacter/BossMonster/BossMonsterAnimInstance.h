@@ -11,4 +11,8 @@ class FANTASYRPG_API UBossMonsterAnimInstance : public UMonsterAnimInstance
 	
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+private :
+	UFUNCTION()
+	void AnimNotify_SkillJump();
 };

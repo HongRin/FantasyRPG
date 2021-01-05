@@ -16,6 +16,9 @@ private :
 	UPROPERTY()
 	class AMonsterCharacter* MonsterCharacter;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Basic", meta = (AllowPrivateAccess = "true"))
+	FName AIControllerCode;
+
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UAISenseConfig_Sight* AISightConfig;
 
@@ -25,12 +28,19 @@ private :
 	UPROPERTY()
 	class AActor* TrackingTargetActor;
 
+	UPROPERTY()
+	class UDataTable* AIControllerDatatable;
+
 public :
 	AMonsterController();
 
 public :
+	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float dt) override;
+
+public :
+	void InitializeMonsterControllerConstructTime();
 
 private :
 	void InitializeMonsterController();

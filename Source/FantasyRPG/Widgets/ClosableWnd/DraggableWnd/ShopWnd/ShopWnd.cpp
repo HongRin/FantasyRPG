@@ -20,7 +20,7 @@ UShopWnd::UShopWnd(const FObjectInitializer& ObjInitializer) :
 	Super(ObjInitializer)
 {
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_ITEM_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfoDataTable.DT_ItemInfoDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfo.DT_ItemInfo'"));
 	if (DT_ITEM_INFO.Succeeded()) DT_ItemInfo = DT_ITEM_INFO.Object;
 	else { UE_LOG(LogTemp, Error, TEXT("ShopWnd.cpp :: %d LINE :: DT_ITEM_INFO is not loaded!"), __LINE__); }
 

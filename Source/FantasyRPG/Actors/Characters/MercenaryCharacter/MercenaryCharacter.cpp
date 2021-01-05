@@ -21,7 +21,7 @@ AMercenaryCharacter::AMercenaryCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MERCENARY_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_MercenaryInfoDataTable.DT_MercenaryInfoDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_MercenaryInfo.DT_MercenaryInfo'"));
 	if (DT_MERCENARY_INFO.Succeeded()) MercenaryDatatable = DT_MERCENARY_INFO.Object;
 	else UE_LOG(LogTemp, Error, TEXT("AMercenaryCharacter.cpp :: %d :: LINE :: DT_MERCENARY_INFO is not loaded !"), __LINE__);
 
@@ -33,7 +33,7 @@ AMercenaryCharacter::AMercenaryCharacter()
 	SetGenericTeamId(TEAM_MERCENRAY);
 
 }
-
+ 
 void AMercenaryCharacter::BeginPlay()
 {
 	Super::BeginPlay();

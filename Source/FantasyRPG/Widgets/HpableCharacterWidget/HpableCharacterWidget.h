@@ -17,13 +17,16 @@ protected:
 
 	class UTextBlock* Text_Level;
 
+	float LineHp;
+	float LineMaxHp;
+
 protected:
 	virtual void NativeOnInitialized() override;
 
 public:
-
 	void InitializeWidget(class ABaseCharacter* ownerCharacter);
 	void UpdateHp();
 	void SetLevelText(int value);
+	void SetLineHp(float Line);
 	
 };

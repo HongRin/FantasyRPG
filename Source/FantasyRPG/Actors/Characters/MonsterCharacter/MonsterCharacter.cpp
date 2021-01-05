@@ -7,6 +7,8 @@
 #include "Components/MonsterAttack/MonsterAttackComponent.h"
 #include "Components/CharacterWidget/MonsterWidget/MonsterWidgetComponent.h"
 
+#include "Enums/MonsterType.h"
+
 #include "BrainComponent.h"
 
 #include "Widgets/HpableCharacterWidget/HpableCharacterWidget.h"
@@ -24,15 +26,13 @@ AMonsterCharacter::AMonsterCharacter()
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MONSTER_DATA(
 		TEXT("DataTable'/Game/Resources/DataTables/DT_MonsterInfo.DT_MonsterInfo'"));
 	if (DT_MONSTER_DATA.Succeeded()) MonsterDatatable = DT_MONSTER_DATA.Object;
+	else { UE_LOG(LogTemp, Error, TEXT("AMonsterCharacter.cpp :: %d LINE :: DT_MONSTER_DATA is not loaded!"), __LINE__); }
 
 	SetGenericTeamId(TEAM_MONSTER);
 
 
 	// Component Initialization
 	InitializeComponent();
-
-	// Set up the AI Controller
-	AIControllerClass = AMonsterController::StaticClass();
 }
 
 void AMonsterCharacter::BeginPlay()
@@ -49,9 +49,16 @@ void AMonsterCharacter::BeginPlay()
 	MonsterWidget->GetEnemyWidgetInstance()->InitializeWidget(this);
 	MonsterWidget->GetEnemyWidgetInstance()->SetNameText(GetMonsterInfo()->MonsterName);
 	MonsterWidget->GetEnemyWidgetInstance()->SetLevelText(GetMonsterInfo()->Lv);
+	MonsterWidget->GetEnemyWidgetInstance()->SetLineHp(3);
 	MonsterWidget->GetEnemyWidgetInstance()->UpdateHp();
 
-	Tags.Add(TEXT("Monster"));
+
+	if (GetMonsterInfo()->MonsterType == EMonsterType::MT_BOSS)
+	{
+		Tags.Add(TEXT("BsMonster"));
+	}
+	else Tags.Add(TEXT("Monster"));
+
 }
 
 void AMonsterCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
@@ -100,6 +107,9 @@ void AMonsterCharacter::InitializeSkeletalMeshComponent()
 	// Anim Blueprint Asset Load
 	UBlueprint* monsterAnimInstClass = Cast<UBlueprint>(
 		GameInst->GetStreamableManager()->LoadSynchronous(MonsterInfo.AnimInstanceClassPath));
+
+	UBlueprint* monsterAIControllerInstClass = Cast<UBlueprint>(
+		GameInst->GetStreamableManager()->LoadSynchronous(MonsterInfo.AIControllerClassPath));
 	
 	if (IsValid(monsterMesh))
 	{
@@ -122,6 +132,16 @@ void AMonsterCharacter::InitializeSkeletalMeshComponent()
 	
 		// Apply AnimInstanceClass
 		GetMesh()->SetAnimClass(bpAnimInstClass);
+	}
+
+	if (IsValid(monsterAIControllerInstClass))
+	{
+		TSubclassOf<AController> bpAIControllerClass =
+			static_cast<TSubclassOf<AMonsterController>>(monsterAIControllerInstClass->GeneratedClass);
+
+		UE_LOG(LogTemp, Warning, TEXT("AIControllerClass Setting"));
+
+		AIControllerClass = bpAIControllerClass;
 	}
 }
 

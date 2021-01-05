@@ -108,7 +108,6 @@ public :
 
 	bool IsMercenaryMovable() const;
 
-
 	FORCEINLINE FMercenaryInfo* GetMercenaryInfo()
 	{ return &MercenaryInfo; }
 

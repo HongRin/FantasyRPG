@@ -20,7 +20,7 @@ protected :
 public :
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-private :
+protected :
 	UFUNCTION()
 	void AnimNotify_MonsterAttackFin();
 

@@ -17,14 +17,14 @@
 AInteractableNpc::AInteractableNpc()
 {
 	static ConstructorHelpers::FObjectFinder<UDataTable> ST_SHOP_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_ShopInfoDataTable.DT_ShopInfoDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_ShopInfo.DT_ShopInfo'"));
 	if (ST_SHOP_INFO.Succeeded()) DT_ShopInfo = ST_SHOP_INFO.Object;
-	else { UE_LOG(LogTemp, Error, TEXT("IInteractableNpc.cpp :: %d LINE :: ST_SHOP_INFO is not loaded!"), __LINE__); }
+	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: ST_SHOP_INFO is not loaded!"), __LINE__); }
 
 	static ConstructorHelpers::FClassFinder<UShopWnd> BP_SHOP_WND(
 		TEXT("WidgetBlueprint'/Game/Resources/Blueprints/Widgets/ClosableWnd/DraggableWnd/ShopWnd/BP_ShopWnd.BP_ShopWnd_C'"));
 	if (BP_SHOP_WND.Succeeded()) ShopWndClass = BP_SHOP_WND.Class;
-	else { UE_LOG(LogTemp, Error, TEXT("IInteractableNpc.cpp :: %d LINE :: BP_SHOP_WND is not loaded!"), __LINE__); }
+	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: BP_SHOP_WND is not loaded!"), __LINE__); }
 
 
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SKELETAL_MESH_COMPONENT"));

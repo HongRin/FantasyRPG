@@ -26,7 +26,7 @@ UDropItemList::UDropItemList(const FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer)
 {
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_ITEMINFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfoDataTable.DT_ItemInfoDataTable'"));
+		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfo.DT_ItemInfo'"));
 	if (DT_ITEMINFO.Succeeded()) DT_ItemInfo = DT_ITEMINFO.Object;
 	else { UE_LOG(LogTemp, Error, TEXT("UDropItemList.cpp :: %d LINE :: DT_ITEMINFO is not Loaded!"), __LINE__); }
 }

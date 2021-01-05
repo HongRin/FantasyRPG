@@ -3,6 +3,16 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 
+#include "Structures/Player/PlayerInfo.h"
+
+#include "Single/GameInstance/FRGameInstance.h"
+#include "Single/PlayerManager/PlayerManager.h"
+
+#include "Widgets/SWidget.h"
+#include "Styling/SlateTypes.h"
+#include "Slate/SlateBrushAsset.h"
+
+
 void UHpableCharacterWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -25,11 +35,36 @@ void UHpableCharacterWidget::UpdateHp()
 		return;
 	}
 
+	if (OwnerCharacter->ActorHasTag(TEXT("BsMonster")))
+	{
+		FPlayerInfo* playerInfo = GetManager(UPlayerManager)->GetPlayerInfo();
+		ProgressBar_HP->WidgetStyle.BackgroundImage.TintColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		ProgressBar_HP->WidgetStyle.FillImage.TintColor = FLinearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	
+		UE_LOG(LogTemp, Warning, TEXT("HP : %.2f"), LineMaxHp);
+		UE_LOG(LogTemp, Warning, TEXT("LINEHP : %.2f"), LineMaxHp);
+		UE_LOG(LogTemp, Warning, TEXT("Perecent : %.2f"), LineHp / LineMaxHp);
+	
+		LineHp -= playerInfo->Atk;
+	
+		if (LineHp / LineMaxHp <= 0.0f)
+		{
+			LineHp = OwnerCharacter->GetMaxHp() / 5;
+		}
+	
+		ProgressBar_HP->SetPercent(LineHp / LineMaxHp);
+	}
+	else
 	ProgressBar_HP->SetPercent(OwnerCharacter->GetHp() / OwnerCharacter->GetMaxHp());
 }
 
 void UHpableCharacterWidget::SetLevelText(int value)
 {
-	FText itemLevel = FText::FromString(FString(TEXT("LV ")) + FString::FromInt(value));
-	Text_Level->SetText(itemLevel);
+	FText Level = FText::FromString(FString(TEXT("LV ")) + FString::FromInt(value));
+	Text_Level->SetText(Level);
+}
+
+void UHpableCharacterWidget::SetLineHp(float Line)
+{
+	LineHp = LineMaxHp = OwnerCharacter->GetMaxHp() / Line;
 }
