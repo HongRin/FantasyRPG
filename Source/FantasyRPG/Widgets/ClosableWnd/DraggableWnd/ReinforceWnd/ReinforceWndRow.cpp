@@ -23,11 +23,7 @@ UReinforceWndRow::UReinforceWndRow(const FObjectInitializer& objInitializer) :
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_EQUIP_ITEM_INFO(
 		TEXT("DataTable'/Game/Resources/DataTables/DT_EquipItemInfo.DT_EquipItemInfo'"));
 
-	if (DT_EQUIP_ITEM_INFO.Succeeded())
-	{
-		DTEquipItemInfo = DT_EQUIP_ITEM_INFO.Object;
-		{ UE_LOG(LogTemp, Warning, TEXT("ReinforceWndRow.cpp :: %d LINE :: DT_EQUIP_ITEM_INFO is loaded!"), __LINE__); }
-	}
+	if (DT_EQUIP_ITEM_INFO.Succeeded()) DTEquipItemInfo = DT_EQUIP_ITEM_INFO.Object;
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("ReinforceWndRow.cpp :: %d LINE :: DT_EQUIP_ITEM_INFO is not loaded!"), __LINE__);

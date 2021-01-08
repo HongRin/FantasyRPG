@@ -49,9 +49,8 @@ void AMonsterCharacter::BeginPlay()
 	MonsterWidget->GetEnemyWidgetInstance()->InitializeWidget(this);
 	MonsterWidget->GetEnemyWidgetInstance()->SetNameText(GetMonsterInfo()->MonsterName);
 	MonsterWidget->GetEnemyWidgetInstance()->SetLevelText(GetMonsterInfo()->Lv);
-	MonsterWidget->GetEnemyWidgetInstance()->SetLineHp(3);
+	MonsterWidget->GetEnemyWidgetInstance()->SetLineHp(MonsterHpLine);
 	MonsterWidget->GetEnemyWidgetInstance()->UpdateHp();
-
 
 	if (GetMonsterInfo()->MonsterType == EMonsterType::MT_BOSS)
 	{

@@ -39,9 +39,6 @@ public :
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float dt) override;
 
-public :
-	void InitializeMonsterControllerConstructTime();
-
 private :
 	void InitializeMonsterController();
 

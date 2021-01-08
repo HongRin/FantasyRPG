@@ -17,6 +17,8 @@ protected:
 
 	class UTextBlock* Text_Level;
 
+	float HpCount;
+	float Line;
 	float LineHp;
 	float LineMaxHp;
 
@@ -27,6 +29,6 @@ public:
 	void InitializeWidget(class ABaseCharacter* ownerCharacter);
 	void UpdateHp();
 	void SetLevelText(int value);
-	void SetLineHp(float Line);
+	void SetLineHp(float line);
 	
 };

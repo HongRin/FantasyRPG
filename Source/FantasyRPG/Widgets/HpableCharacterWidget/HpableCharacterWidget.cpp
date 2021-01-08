@@ -20,11 +20,14 @@ void UHpableCharacterWidget::NativeOnInitialized()
 	ProgressBar_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("ProgressBar_HP")));
 
 	Text_Level = Cast<UTextBlock>(GetWidgetFromName("Text_Level"));
+
+
 }
 
 void UHpableCharacterWidget::InitializeWidget(ABaseCharacter* ownerCharacter)
 {
 	OwnerCharacter = ownerCharacter;
+	UpdateHp();
 }
 
 void UHpableCharacterWidget::UpdateHp()
@@ -37,11 +40,13 @@ void UHpableCharacterWidget::UpdateHp()
 
 	if (OwnerCharacter->ActorHasTag(TEXT("BsMonster")))
 	{
+
+
 		FPlayerInfo* playerInfo = GetManager(UPlayerManager)->GetPlayerInfo();
 		ProgressBar_HP->WidgetStyle.BackgroundImage.TintColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		ProgressBar_HP->WidgetStyle.FillImage.TintColor = FLinearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
-		UE_LOG(LogTemp, Warning, TEXT("HP : %.2f"), LineMaxHp);
+		UE_LOG(LogTemp, Warning, TEXT("HP : %.2f"), LineHp);
 		UE_LOG(LogTemp, Warning, TEXT("LINEHP : %.2f"), LineMaxHp);
 		UE_LOG(LogTemp, Warning, TEXT("Perecent : %.2f"), LineHp / LineMaxHp);
 	
@@ -49,7 +54,8 @@ void UHpableCharacterWidget::UpdateHp()
 	
 		if (LineHp / LineMaxHp <= 0.0f)
 		{
-			LineHp = OwnerCharacter->GetMaxHp() / 5;
+			LineHp = OwnerCharacter->GetMaxHp() / Line;
+			--HpCount;
 		}
 	
 		ProgressBar_HP->SetPercent(LineHp / LineMaxHp);
@@ -57,14 +63,18 @@ void UHpableCharacterWidget::UpdateHp()
 	else
 	ProgressBar_HP->SetPercent(OwnerCharacter->GetHp() / OwnerCharacter->GetMaxHp());
 }
-
+                                                   
 void UHpableCharacterWidget::SetLevelText(int value)
 {
 	FText Level = FText::FromString(FString(TEXT("LV ")) + FString::FromInt(value));
 	Text_Level->SetText(Level);
 }
 
-void UHpableCharacterWidget::SetLineHp(float Line)
+void UHpableCharacterWidget::SetLineHp(float line)
 {
-	LineHp = LineMaxHp = OwnerCharacter->GetMaxHp() / Line;
+	Line = line;
+	HpCount = line;
+	LineHp = OwnerCharacter->GetMaxHp() / line;
+	LineMaxHp = OwnerCharacter->GetMaxHp() / line;
 }
+
