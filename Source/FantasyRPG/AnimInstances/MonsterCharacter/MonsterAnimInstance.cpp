@@ -24,6 +24,8 @@ void UMonsterAnimInstance::AnimNotify_MonsterAttackFin()
 {
 	if (Owner->GetMonsterAttack()->OnMonsterAttackFinished.IsBound())
 		Owner->GetMonsterAttack()->OnMonsterAttackFinished.Broadcast();
+
+	Owner->GetMonsterInfo()->Atk = Owner->GetMonsterAtk();
 }
 
 void UMonsterAnimInstance::AnimNotify_UpdateRotation()

@@ -25,4 +25,10 @@ private :
 
 	UFUNCTION()
 	void AnimNotify_KnightAttackRange();
+
+	UFUNCTION()
+	void AnimNotify_UpdateRotation();
+
+	UFUNCTION()
+	void AnimNotify_Dash();
 };

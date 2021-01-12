@@ -1,6 +1,7 @@
 #include "MonsterCharacter.h"
 
 #include "Actors/Controllers/MonsterController/MonsterController.h"
+#include "Actors/InteractableActor/DropItem/DropItem.h"
 
 
 #include "Components/PlayerDetector/PlayerDetectorComponent.h"
@@ -16,6 +17,7 @@
 #include "AnimInstances/MonsterCharacter/MonsterAnimInstance.h"
 
 #include "Structures/Monster/MonsterInfo.h"
+#include "Structures/ItemInfo/ItemInfo.h"
 
 #include "Single/GameInstance/FRGameInstance.h"
 
@@ -27,12 +29,18 @@ AMonsterCharacter::AMonsterCharacter()
 		TEXT("DataTable'/Game/Resources/DataTables/DT_MonsterInfo.DT_MonsterInfo'"));
 	if (DT_MONSTER_DATA.Succeeded()) MonsterDatatable = DT_MONSTER_DATA.Object;
 	else { UE_LOG(LogTemp, Error, TEXT("AMonsterCharacter.cpp :: %d LINE :: DT_MONSTER_DATA is not loaded!"), __LINE__); }
+	
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_ITEM_INFO(
+		TEXT("DataTable'/Game/Resources/DataTables/DT_ItemInfo.DT_ItemInfo'"));
+	if (DT_ITEM_INFO.Succeeded()) DTItemInfo = DT_ITEM_INFO.Object;
+	else { UE_LOG(LogTemp, Error, TEXT("PlayerInventoryComponent.cpp :: %d LINE :: DT_ITEM_INFO is not loaded!"), __LINE__); }
 
 	SetGenericTeamId(TEAM_MONSTER);
 
-
 	// Component Initialization
 	InitializeComponent();
+
+	SetDropItems();
 }
 
 void AMonsterCharacter::BeginPlay()
@@ -58,6 +66,7 @@ void AMonsterCharacter::BeginPlay()
 	}
 	else Tags.Add(TEXT("Monster"));
 
+	SetDropItems();
 }
 
 void AMonsterCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
@@ -78,7 +87,13 @@ void AMonsterCharacter::OnCharacterDie()
 	FTimerHandle timerHandle;
 	GetWorld()->GetTimerManager().SetTimer(
 		timerHandle,
-		[this]() { Destroy(); },
+		[this]() { 
+			if (!(DropItems.Num() == 0))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("DropItemSpawn"));
+				ADropItem::SpawnItem(this, DropItems, GetActorLocation(), GetActorRotation());
+			}
+			Destroy(); },
 		3.0f,
 		false);
 }
@@ -138,9 +153,22 @@ void AMonsterCharacter::InitializeSkeletalMeshComponent()
 		TSubclassOf<AController> bpAIControllerClass =
 			static_cast<TSubclassOf<AMonsterController>>(monsterAIControllerInstClass->GeneratedClass);
 
-		UE_LOG(LogTemp, Warning, TEXT("AIControllerClass Setting"));
-
 		AIControllerClass = bpAIControllerClass;
+	}
+}
+
+void AMonsterCharacter::SetDropItems()
+{
+	FString contextString;
+
+	UE_LOG(LogTemp, Warning, TEXT("MonsterInfo.DropItemCode.Num()::%d"), MonsterInfo.DropItemCode.Num());
+
+	for (int i = 0; i < MonsterInfo.DropItemCode.Num(); ++i)
+	{
+		FItemInfo* itemInfo = DTItemInfo->FindRow<FItemInfo>(
+			MonsterInfo.DropItemCode[i], contextString
+			);
+		DropItems.Add(FItemSlotInfo(itemInfo->ItemCode, 1));
 	}
 }
 
@@ -164,13 +192,14 @@ void AMonsterCharacter::InitializeMonsterDataConstructTime()
 	
 	// Set up the Hp
 	Hp = MaxHp = monsterInfo->MaxHp;
+
+	MonsterAtk = monsterInfo->Atk;
 	
 	// Set up the MaxWalkSpeed
 	GetCharacterMovement()->MaxWalkSpeed = MonsterInfo.MaxSpeed;                                              
 	
 	// SkeletalMesh Initialization
 	InitializeSkeletalMeshComponent();
-	
 
 	// Set up the Widget Location
 	MonsterWidget->SetWidgetHeight(

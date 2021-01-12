@@ -1,6 +1,7 @@
 #include "MercenaryAnimInstance.h"
 
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
+#include "Actors/Controllers/MercenaryController/MercenaryController.h"
 #include "Components/MercenaryAttack/MercenaryAttackComponent.h"
 
 void UMercenaryAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -26,4 +27,14 @@ void UMercenaryAnimInstance::AnimNotify_KnightAttackFin()
 void UMercenaryAnimInstance::AnimNotify_KnightAttackRange()
 {
 	Owner->GetMercenaryAttack()->ActiveMercenaryAttackRange();
+}
+
+void UMercenaryAnimInstance::AnimNotify_UpdateRotation()
+{
+	Cast<AMercenaryController>(Owner->GetController())->IsLookatPlayer();
+}
+
+void UMercenaryAnimInstance::AnimNotify_Dash()
+{
+	Owner->MercenaryDash(Owner->GetActorForwardVector(), 1000.0f);
 }

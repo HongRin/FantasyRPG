@@ -10,7 +10,7 @@ void UBossMonsterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void UBossMonsterAnimInstance::AnimNotify_SkillJump()
 {
-	FVector direction = FVector::UpVector;
-	direction += Owner->GetActorForwardVector();
-	Owner->MonsterDash(direction , 1000.0f);
+	Owner->MonsterDash(Owner->GetActorForwardVector() + FVector::UpVector, 500.0f);
+
+	Owner->GetMonsterInfo()->Atk *= 3;
 }

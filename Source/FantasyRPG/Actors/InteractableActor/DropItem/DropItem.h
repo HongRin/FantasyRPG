@@ -14,6 +14,14 @@ private:
 	TSubclassOf<class UItemDropWnd> ItemDropWndClass;
 
 private :
+	class UParticleSystem* Particle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UParticleSystemComponent* ParticleSystem;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UCharacterMovementComponent* CharacterMovement;
+
 	TArray<FItemSlotInfo> Items;
 
 public :
@@ -21,6 +29,8 @@ public :
 	
 protected :
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime);
 
 public :
 	static ADropItem* SpawnItem(UObject* contextObj, TArray<FItemSlotInfo> items, FVector location, FRotator rotation = FRotator::ZeroRotator);
@@ -31,4 +41,6 @@ protected :
 public :
 	FORCEINLINE void ItemEmpty(int32 index)
 	{ Items[index] = FItemSlotInfo(); }
+
+	void PlayPartice();
 };

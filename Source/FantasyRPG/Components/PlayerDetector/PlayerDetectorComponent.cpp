@@ -35,7 +35,7 @@ void UPlayerDetectorComponent::OnPlayerDetected(UPrimitiveComponent* OverlappedC
 		}
 	}
 
-	if (OtherActor->ActorHasTag(TEXT("Monster")))
+	if (OtherActor->ActorHasTag(TEXT("Monster")) || OtherActor->ActorHasTag(TEXT("BsMonster")))
 	{
 		if (OtherComp == Cast<AMonsterCharacter>(OtherActor)->GetCapsuleComponent())
 		{

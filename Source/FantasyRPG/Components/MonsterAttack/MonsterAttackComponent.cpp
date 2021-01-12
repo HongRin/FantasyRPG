@@ -1,6 +1,7 @@
 #include "MonsterAttackComponent.h"
 
 #include "Actors/Characters/MonsterCharacter/MonsterCharacter.h"
+#include "Structures/Monster/MonsterInfo.h"
 
 UMonsterAttackComponent::UMonsterAttackComponent()
 {
@@ -52,7 +53,13 @@ void UMonsterAttackComponent::PlayMonsterAttackAnimation()
 
 void UMonsterAttackComponent::ActiveMonsterAttackRange()
 {
-	float attackRange = 100.0f;
+	FMonsterInfo* monsterInfo = MonsterCharacter->GetMonsterInfo();
+	
+	float attackRange = (AttackState == MONSTER_ATTACK_BASIC && MonsterCharacter->ActorHasTag("BsMonster")) ? 
+		monsterInfo->AtkRange : monsterInfo->AtkRange * 2.5f;
+
+	FVector start = (AttackState == MONSTER_ATTACK_BASIC && MonsterCharacter->ActorHasTag("BsMonster")) ?
+		MonsterCharacter->GetActorLocation() : MonsterCharacter->GetActorLocation() - FVector(0.0f, (attackRange / 2), 0.0f);
 
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add(MonsterCharacter);
@@ -61,9 +68,9 @@ void UMonsterAttackComponent::ActiveMonsterAttackRange()
 
 	UKismetSystemLibrary::SphereTraceMultiByProfile(
 		GetWorld(),
-		MonsterCharacter->GetActorLocation(),
+		start,
 		MonsterCharacter->GetActorLocation() + (MonsterCharacter->GetActorForwardVector() * attackRange),
-		MonsterCharacter->GetMonsterInfo()->AtkRange,
+		attackRange,
 		TEXT("AttackRange"),
 		true,
 		actorsToIgnore,

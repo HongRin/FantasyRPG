@@ -148,6 +148,11 @@ void AMercenaryCharacter::InitializeMercenaryDataConstructTime()
 	InitializeSkeletalMeshComponent();
 }
 
+void AMercenaryCharacter::MercenaryDash(FVector direction, float power)
+{
+	GetCharacterMovement()->AddImpulse(direction * power, true);
+}
+
 bool AMercenaryCharacter::IsMercenaryMovable() const
 {
 	return !(GetMercenaryAttack()->IsMercenaryAttacking());

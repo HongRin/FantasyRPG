@@ -109,7 +109,7 @@ void AMercenaryController::TrackingActor()
 {
 	if (!IsValid(TrackingTargetActor)) return;
 	
-	if(TrackingTargetActor->ActorHasTag(TEXT("Monster")))
+	if(TrackingTargetActor->ActorHasTag(TEXT("Monster")) || TrackingTargetActor->ActorHasTag(TEXT("BsMonster")))
 	GetBlackboardComponent()->SetValueAsBool(TEXT("IsTracking"), true);
 	
 	MoveToActor(TrackingTargetActor);
@@ -138,6 +138,11 @@ void AMercenaryController::OnSightDetected(AActor* Actor, FAIStimulus Stimulus)
 	if (Stimulus.WasSuccessfullySensed())
 	{
 		if (Actor->ActorHasTag(TEXT("Monster")))
+		{
+			if (!IsValid(TrackingTargetActor))
+				TrackingTargetActor = Actor;
+		}
+		if (Actor->ActorHasTag(TEXT("BsMonster")))
 		{
 			if (!IsValid(TrackingTargetActor))
 				TrackingTargetActor = Actor;

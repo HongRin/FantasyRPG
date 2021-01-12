@@ -27,7 +27,6 @@ void UHpableCharacterWidget::NativeOnInitialized()
 void UHpableCharacterWidget::InitializeWidget(ABaseCharacter* ownerCharacter)
 {
 	OwnerCharacter = ownerCharacter;
-	UpdateHp();
 }
 
 void UHpableCharacterWidget::UpdateHp()
@@ -41,27 +40,40 @@ void UHpableCharacterWidget::UpdateHp()
 	if (OwnerCharacter->ActorHasTag(TEXT("BsMonster")))
 	{
 
-
 		FPlayerInfo* playerInfo = GetManager(UPlayerManager)->GetPlayerInfo();
-		ProgressBar_HP->WidgetStyle.BackgroundImage.TintColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		ProgressBar_HP->WidgetStyle.FillImage.TintColor = FLinearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	
-		UE_LOG(LogTemp, Warning, TEXT("HP : %.2f"), LineHp);
-		UE_LOG(LogTemp, Warning, TEXT("LINEHP : %.2f"), LineMaxHp);
-		UE_LOG(LogTemp, Warning, TEXT("Perecent : %.2f"), LineHp / LineMaxHp);
+
 	
 		LineHp -= playerInfo->Atk;
 	
+
 		if (LineHp / LineMaxHp <= 0.0f)
 		{
 			LineHp = OwnerCharacter->GetMaxHp() / Line;
-			--HpCount;
+			HpCount -= 1.0f;
 		}
-	
+
 		ProgressBar_HP->SetPercent(LineHp / LineMaxHp);
+
+		if (HpCount == 3.0f)
+		{
+			ProgressBar_HP->WidgetStyle.BackgroundImage.TintColor = FLinearColor(0.64f, 0.0f, 0.01f, 1.0f);
+			ProgressBar_HP->WidgetStyle.FillImage.TintColor = FLinearColor(1.0f, 0.25f, 0.0f, 1.0f);
+		}
+		else if (HpCount == 2.0f)
+		{
+			ProgressBar_HP->WidgetStyle.BackgroundImage.TintColor = FLinearColor(0.3f, 0.005f, 0.0f, 1.0f);
+			ProgressBar_HP->WidgetStyle.FillImage.TintColor = FLinearColor(0.64f, 0.0f, 0.01f, 1.0f);
+		}
+		else if (HpCount == 1.0f)
+		{
+			ProgressBar_HP->WidgetStyle.BackgroundImage.TintColor = FLinearColor(0.135f, 0.002f, 0.0f, 1.0f);
+			ProgressBar_HP->WidgetStyle.FillImage.TintColor = FLinearColor(0.3f, 0.005f, 0.0f, 1.0f);
+		}
 	}
 	else
 	ProgressBar_HP->SetPercent(OwnerCharacter->GetHp() / OwnerCharacter->GetMaxHp());
+
+
 }
                                                    
 void UHpableCharacterWidget::SetLevelText(int value)
@@ -70,7 +82,7 @@ void UHpableCharacterWidget::SetLevelText(int value)
 	Text_Level->SetText(Level);
 }
 
-void UHpableCharacterWidget::SetLineHp(float line)
+void UHpableCharacterWidget::SetLineHp(float line = 1.0f)
 {
 	Line = line;
 	HpCount = line;

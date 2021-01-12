@@ -3,6 +3,7 @@
 #include "Actors/Characters/BaseCharacter.h"
 #include "GenericTeamAgentInterface.h"
 #include "Structures/Monster/MonsterInfo.h"
+#include "Structures/ItemSlotInfo/ItemSlotInfo.h"
 #include "MonsterCharacter.generated.h"
 
 UCLASS()
@@ -42,9 +43,15 @@ private :
 	UPROPERTY()
 	class UDataTable* MonsterDatatable;
 
+	class UDataTable* DTItemInfo;
+
 	FMonsterInfo MonsterInfo;
 
 	FGenericTeamId TeamId;
+	
+	TArray<FItemSlotInfo> DropItems;
+
+	float MonsterAtk;
 public:
 	AMonsterCharacter();
 
@@ -69,6 +76,8 @@ private :
 
 	// SkeletalMeshInfomation Initialization
 	void InitializeSkeletalMeshComponent();
+	
+	void SetDropItems();
 
 public :
 	// MonsterData Initialization
@@ -101,5 +110,8 @@ public :
 
 	FORCEINLINE FMonsterInfo* GetMonsterInfo()
 	{ return &MonsterInfo; }
+
+	FORCEINLINE float GetMonsterAtk() const
+	{ return MonsterAtk; }
 
 };

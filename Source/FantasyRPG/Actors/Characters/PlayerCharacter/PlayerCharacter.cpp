@@ -55,15 +55,6 @@ void APlayerCharacter::BeginPlay()
 
 	Tags.Add(TEXT("Player"));
 
-
-	TArray<FItemSlotInfo> items = {
-		FItemSlotInfo(FName(TEXT("40001")), 12),
-		FItemSlotInfo(FName(TEXT("40002")), 11),
-		FItemSlotInfo(FName(TEXT("50001")), 30),
-		FItemSlotInfo(FName(TEXT("50002")), 1),
-		FItemSlotInfo(FName(TEXT("50004")), 100)
-	};
-	ADropItem::SpawnItem(this, items, GetActorLocation(), GetActorRotation());
 }
 
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)

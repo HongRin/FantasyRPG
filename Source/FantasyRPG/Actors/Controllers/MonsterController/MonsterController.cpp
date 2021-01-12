@@ -95,7 +95,7 @@ bool AMonsterController::IsPlayerNearby()
 
 	if (IsValid(MonsterCharacter))
 	{
-		nearby = MonsterCharacter->GetPlayerDetector()->IsPlayerDetected();
+		nearby = MonsterCharacter->GetPlayerDetector()->IsPlayerDetected() || MonsterCharacter->GetPlayerDetector()->IsMercenaryDetected();
 	}
 
 	GetBlackboardComponent()->SetValueAsBool(TEXT("PlayerIsNearby"), nearby);

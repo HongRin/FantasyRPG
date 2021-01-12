@@ -79,6 +79,8 @@ public :
 	UFUNCTION(BlueprintCallable)
 	void InitializeMercenaryDataConstructTime();
 
+	void MercenaryDash(FVector direction, float power);
+
 public :
 	FORCEINLINE virtual void SetGenericTeamId(const FGenericTeamId& TeamID) override
 	{ this->TeamId = TeamID; }

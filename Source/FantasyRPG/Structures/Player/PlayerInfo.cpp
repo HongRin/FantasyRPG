@@ -2,7 +2,7 @@
 
 FPlayerInfo::FPlayerInfo()
 {
-	Atk = 33.0f;
+	Atk = 400.0f;
 	Hp = MaxHp = 999.0f;
 	Def = 30.0f;
 	Mp = MaxMp = 200.0f;
