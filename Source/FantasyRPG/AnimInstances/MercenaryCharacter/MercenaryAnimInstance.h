@@ -31,4 +31,7 @@ private :
 
 	UFUNCTION()
 	void AnimNotify_Dash();
+
+	UFUNCTION()
+	void AnimNotify_SkillFin();
 };

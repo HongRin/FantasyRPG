@@ -3,6 +3,7 @@
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 #include "Actors/Controllers/MercenaryController/MercenaryController.h"
 #include "Components/MercenaryAttack/MercenaryAttackComponent.h"
+#include "Components/HealerBehavior/HealerBehaviorComponent.h"
 
 void UMercenaryAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
@@ -37,4 +38,10 @@ void UMercenaryAnimInstance::AnimNotify_UpdateRotation()
 void UMercenaryAnimInstance::AnimNotify_Dash()
 {
 	Owner->MercenaryDash(Owner->GetActorForwardVector(), 1000.0f);
+}
+
+void UMercenaryAnimInstance::AnimNotify_SkillFin()
+{
+	if (Owner->GetHealerBehavior()->OnHealerSkillFinished.IsBound())
+		Owner->GetHealerBehavior()->OnHealerSkillFinished.Broadcast();
 }

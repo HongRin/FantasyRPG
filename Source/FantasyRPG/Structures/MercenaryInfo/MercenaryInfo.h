@@ -23,6 +23,9 @@ public:
 	FSoftObjectPath AnimInstanceClassPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FSoftObjectPath MercenaryControllerClassPath;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FText MercenaryName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "1000.0", ClampMin = "0.0", ClampMax = "1000.0"))
@@ -36,4 +39,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "100.0", ClampMin = "0.0", ClampMax = "100.0"))
 	float SkillPercentage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "100.0", ClampMin = "0.0", ClampMax = "100.0"))
+	float SKillCoolDownTime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "10000.0", ClampMin = "0.0", ClampMax = "10000.0"))
+	float BuffAtkFigure;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "100.0", ClampMin = "0.0", ClampMax = "100.0"))
+	float HealingFigure;
+
+	// 기타 수치
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float value1;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float value2;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float value3;
 };
+

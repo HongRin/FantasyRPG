@@ -26,4 +26,7 @@ public:
 	// 재활용된 객체를 얻습니다.
 	/// - callOnRecycleStart : 재사용 가능한 객체를 찾았을 경우 OnRecycleStart() 를 호출시킬 것인지를 결정합니다.
 	IObjectPoolable* GetRecycledObject();
+
+
+	IObjectPoolable* GetRecycledObjectById(int32 objId);
 };

@@ -59,7 +59,7 @@ void UMonsterAttackComponent::ActiveMonsterAttackRange()
 		monsterInfo->AtkRange : monsterInfo->AtkRange * 2.5f;
 
 	FVector start = (AttackState == MONSTER_ATTACK_BASIC && MonsterCharacter->ActorHasTag("BsMonster")) ?
-		MonsterCharacter->GetActorLocation() : MonsterCharacter->GetActorLocation() - FVector(0.0f, (attackRange / 2), 0.0f);
+		MonsterCharacter->GetActorLocation() : MonsterCharacter->GetActorLocation() - FVector((attackRange / 2), (attackRange / 2), 0.0f);
 
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add(MonsterCharacter);

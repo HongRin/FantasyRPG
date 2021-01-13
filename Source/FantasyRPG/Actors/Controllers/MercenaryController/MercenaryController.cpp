@@ -43,6 +43,8 @@ void AMercenaryController::OnPossess(APawn* InPawn)
 		UE_LOG(LogTemp, Error,
 			TEXT("MonsterController.cpp :: %d LINE :: MercenaryBehaviorTree is not loaded !"), __LINE__);
 	}
+
+
 }
 
 void AMercenaryController::BeginPlay()
@@ -64,7 +66,11 @@ void AMercenaryController::Tick(float dt)
 			}
 		}
 		else
+		{
+			if (MercenaryCharacterInstance->GetMercenaryAttack()->OnMercenaryAttackFinished.IsBound())
+				MercenaryCharacterInstance->GetMercenaryAttack()->OnMercenaryAttackFinished.Broadcast();
 			MoveToActor(Cast<AActor>(MercenaryCharacterInstance->GetPlayerCharacter()));
+		}
 	}
 }
 
@@ -150,6 +156,8 @@ void AMercenaryController::OnSightDetected(AActor* Actor, FAIStimulus Stimulus)
 	}
 	else
 	{
+		if (MercenaryCharacterInstance->GetMercenaryAttack()->OnMercenaryAttackFinished.IsBound())
+			MercenaryCharacterInstance->GetMercenaryAttack()->OnMercenaryAttackFinished.Broadcast();
 		TrackingTargetActor = nullptr;
 	}
 }

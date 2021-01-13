@@ -6,6 +6,7 @@
 
 #include "Components/PlayerDetector/PlayerDetectorComponent.h"
 #include "Components/MercenaryAttack/MercenaryAttackComponent.h"
+#include "Components/HealerBehavior/HealerBehaviorComponent.h"
 
 #include "AnimInstances/MercenaryCharacter/MercenaryAnimInstance.h"
 
@@ -24,8 +25,6 @@ AMercenaryCharacter::AMercenaryCharacter()
 		TEXT("DataTable'/Game/Resources/DataTables/DT_MercenaryInfo.DT_MercenaryInfo'"));
 	if (DT_MERCENARY_INFO.Succeeded()) MercenaryDatatable = DT_MERCENARY_INFO.Object;
 	else UE_LOG(LogTemp, Error, TEXT("AMercenaryCharacter.cpp :: %d :: LINE :: DT_MERCENARY_INFO is not loaded !"), __LINE__);
-
-	AIControllerClass = AMercenaryController::StaticClass();
 
 	// Component Initialization
 	InitializeComponent();
@@ -80,6 +79,7 @@ void AMercenaryCharacter::InitializeComponent()
 	PlayerDetector->SetupAttachment(GetRootComponent());
 
 	MercenaryAttack = CreateDefaultSubobject<UMercenaryAttackComponent>(TEXT("ATTACK_COMPONENT"));
+	HealerBehavior = CreateDefaultSubobject<UHealerBehaviorComponent>(TEXT("HEALER_COMPONET"));
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("MercenaryCollision"));
 	GetMesh()->SetCollisionProfileName(TEXT("NoCollision"));
@@ -95,6 +95,9 @@ void AMercenaryCharacter::InitializeSkeletalMeshComponent()
 	UBlueprint* mercenaryAnimInstClass = Cast<UBlueprint>(
 		GameInst->GetStreamableManager()->LoadSynchronous(MercenaryInfo.AnimInstanceClassPath));
 
+	UBlueprint* mercenaryControllerInstClass = Cast<UBlueprint>(
+		GameInst->GetStreamableManager()->LoadSynchronous(MercenaryInfo.MercenaryControllerClassPath));
+
 	if (IsValid(mercenaryMesh))
 	{
 		// Apply the loaded SkeletalMesh
@@ -106,7 +109,7 @@ void AMercenaryCharacter::InitializeSkeletalMeshComponent()
 			FRotator(0.0f, -90.0f, 0.0f));
 	}
 	else
-		UE_LOG(LogTemp, Error, TEXT("AMonsterCharacter.cpp :: %d LINE :: monstermesh is not loaded!"), __LINE__);
+		UE_LOG(LogTemp, Error, TEXT("AMonsterCharacter.cpp :: %d LINE :: mercenaryMesh is not loaded!"), __LINE__);
 	if (IsValid(mercenaryAnimInstClass))
 	{
 		// Cast as the AnimInstanceClass
@@ -115,6 +118,13 @@ void AMercenaryCharacter::InitializeSkeletalMeshComponent()
 
 		// Apply AnimInstanceClass
 		GetMesh()->SetAnimClass(bpAnimInstClass);
+	}
+	if (IsValid(mercenaryControllerInstClass))
+	{
+		TSubclassOf<AAIController> bpControllerInstClass =
+			static_cast<TSubclassOf<AAIController>>(mercenaryControllerInstClass->GeneratedClass);
+
+		AIControllerClass = bpControllerInstClass;
 	}
 }
 
@@ -156,5 +166,9 @@ void AMercenaryCharacter::MercenaryDash(FVector direction, float power)
 bool AMercenaryCharacter::IsMercenaryMovable() const
 {
 	return !(GetMercenaryAttack()->IsMercenaryAttacking());
+}
 
+bool AMercenaryCharacter::IsHealerMovable() const
+{
+	return !(GetHealerBehavior()->IsHealerSkillNone());
 }

@@ -36,7 +36,7 @@ void UMercenaryAttackComponent::PlayMercenaryAttackAnimation()
 {
 	if (AttackState != MERCENARY_ATTACK_NONE) return;
 	if (!IsValid(MercenaryAttack)) return;
-
+	
 	if (OnMercenaryAttackStarted.IsBound())
 		OnMercenaryAttackStarted.Broadcast();
 

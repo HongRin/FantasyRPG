@@ -168,7 +168,15 @@ void AMonsterCharacter::SetDropItems()
 		FItemInfo* itemInfo = DTItemInfo->FindRow<FItemInfo>(
 			MonsterInfo.DropItemCode[i], contextString
 			);
-		DropItems.Add(FItemSlotInfo(itemInfo->ItemCode, 1));
+		if (itemInfo->value2 >= FMath::RandRange(1.0f, 100.0f))
+		{
+			if (MonsterInfo.MonsterType == EMonsterType::MT_BOSS)
+			{
+				DropItems.Add(FItemSlotInfo(itemInfo->ItemCode, FMath::RandRange(1.0f, itemInfo->value3)));
+			}
+			else
+				DropItems.Add(FItemSlotInfo(itemInfo->ItemCode, 1));
+		}
 	}
 }
 

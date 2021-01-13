@@ -28,6 +28,9 @@ private :
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Basic", meta = (AllowPrivateAccess = "true"))
 	class UMercenaryAttackComponent* MercenaryAttack;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Basic", meta = (AllowPrivateAccess = "true"))
+	class UHealerBehaviorComponent* HealerBehavior;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Basic", meta = (AllowPrivateAccess = "true"))
 	float MaxHp;
 
@@ -108,7 +111,14 @@ public :
 		return MercenaryAttack;
 	}
 
+	FORCEINLINE class UHealerBehaviorComponent* GetHealerBehavior() const
+	{
+		return HealerBehavior;
+	}
+
 	bool IsMercenaryMovable() const;
+
+	bool IsHealerMovable() const;
 
 	FORCEINLINE FMercenaryInfo* GetMercenaryInfo()
 	{ return &MercenaryInfo; }

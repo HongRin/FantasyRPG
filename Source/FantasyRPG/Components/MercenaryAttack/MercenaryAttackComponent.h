@@ -26,9 +26,6 @@ public:
 	FOnMercenaryAttackEventSignature OnMercenaryAttackFinished;
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack", meta = (UIMin = "0.0", UIMax = "90.0", ClampMin = "0.0", ClampMax = "90.0", AllowPrivateAccess = "true"))
-	float SkillPercentage;
-
 	UPROPERTY()
 	class AMercenaryCharacter* MercenaryCharacter;
 
@@ -59,6 +56,4 @@ public:
 	{
 		return AttackState != MERCENARY_ATTACK_NONE;
 	};
-
-		
 };
