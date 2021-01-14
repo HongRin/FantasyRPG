@@ -30,7 +30,6 @@ void UPlayerAttackComponent::BeginPlay()
 void UPlayerAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 }
 
 void UPlayerAttackComponent::LoadAsset()
@@ -59,7 +58,6 @@ void UPlayerAttackComponent::LRegularAttack()
 		bIsLRegularAttack = true;
 		PlayerCharacter->PlayAnimMontage(RegularAttackAnimMotage);
 	}
-
 }
 
 void UPlayerAttackComponent::RRegularAttack()

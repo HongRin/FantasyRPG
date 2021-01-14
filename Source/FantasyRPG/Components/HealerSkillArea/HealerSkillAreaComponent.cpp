@@ -37,12 +37,16 @@ void UHealerSkillAreaComponent::OnInSkillArea(UPrimitiveComponent* OverlappedCom
 		{
 			if (Cast<AHealingParticleActor>(GetOwner())->GetSkillState() == 0)
 			{
-				GetManager(UPlayerManager)->GetPlayerInfo()->Hp += 200;
+				UE_LOG(LogTemp, Warning, TEXT("PlayerHp :: %.2f"), GetManager(UPlayerManager)->GetPlayerInfo()->Hp);
+				GetManager(UPlayerManager)->GetPlayerInfo()->Hp += 200.0f;
 				Cast<APlayerCharacter>(OtherActor)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->UpdateHp();
+				UE_LOG(LogTemp, Warning, TEXT("PlayerHp :: %.2f"), GetManager(UPlayerManager)->GetPlayerInfo()->Hp);
 			}
 			else
 			{
-				GetManager(UPlayerManager)->GetPlayerInfo()->Atk += 20;
+				UE_LOG(LogTemp, Warning, TEXT("PlayerAtk :: %.2f"), GetManager(UPlayerManager)->GetPlayerInfo()->Atk);
+				GetManager(UPlayerManager)->GetPlayerInfo()->Atk += 20.0f;
+				UE_LOG(LogTemp, Warning, TEXT("PlayerBuffAtk :: %.2f"), GetManager(UPlayerManager)->GetPlayerInfo()->Atk);
 			}
 		}
 	}
@@ -51,7 +55,6 @@ void UHealerSkillAreaComponent::OnInSkillArea(UPrimitiveComponent* OverlappedCom
 	{
 		if (OtherComp == Cast<AMercenaryCharacter>(OtherActor)->GetCapsuleComponent())
 		{
-			UE_LOG(LogTemp, Warning, TEXT("MercenaryHealing"));
 		}
 	}
 }
@@ -65,6 +68,7 @@ void UHealerSkillAreaComponent::OnOutSkillArea(UPrimitiveComponent* OverlappedCo
 			if (Cast<AHealingParticleActor>(GetOwner())->GetSkillState() == 1)
 			{
 				GetManager(UPlayerManager)->GetPlayerInfo()->Atk -= 20;
+				UE_LOG(LogTemp, Warning, TEXT("PlayerBuffFinAtk :: %.2f"), GetManager(UPlayerManager)->GetPlayerInfo()->Atk);
 			}
 		}
 	}

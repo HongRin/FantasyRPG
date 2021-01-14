@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
+#include "Enums/MercenaryType.h"
 #include "MercenaryInfo.generated.h"
 
 USTRUCT()
@@ -28,6 +29,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FText MercenaryName;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EMercenaryType MercenaryType;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "1000.0", ClampMin = "0.0", ClampMax = "1000.0"))
 	float MaxSpeed;
 
@@ -48,6 +52,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (UIMin = "0.0", UIMax = "100.0", ClampMin = "0.0", ClampMax = "100.0"))
 	float HealingFigure;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 Cost;
 
 	// 기타 수치
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

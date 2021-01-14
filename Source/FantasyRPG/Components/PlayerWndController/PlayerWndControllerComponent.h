@@ -17,10 +17,12 @@ class FANTASYRPG_API UPlayerWndControllerComponent : public UActorComponent
 private:
 	TSubclassOf<class UStatusWnd> BPStatusWndClass;
 	TSubclassOf<class UInventoryWnd> BPInventoryWndClass;
+	TSubclassOf<class UMercenaryWnd> BPMercenaryWndClass;
 	
 private :
 	class UStatusWnd* StatusWnd;
 	class UInventoryWnd* InventoryWnd;
+	class UMercenaryWnd* MercenaryWnd;
 
 #pragma endregion
 
@@ -49,6 +51,9 @@ private :
 	void OpenInventory();
 	void CloseInventory();
 
+	void OpenMercenaryWnd();
+	void CloseMercenaryWnd();
+
 public :
 	// 인벤토리 창 열림 상태에 따라 인벤토리 창을 열거나 닫습니다.
 	FORCEINLINE void ToggleStatus()
@@ -73,4 +78,14 @@ public :
 		return InventoryWnd != nullptr;
 	}
 		
+	FORCEINLINE void ToggleMercenaryWnd()
+	{
+		if (!IsMercenaryWndOpend()) OpenMercenaryWnd();
+		else CloseMercenaryWnd();
+	}
+
+	FORCEINLINE bool IsMercenaryWndOpend() const
+	{
+		return MercenaryWnd != nullptr;
+	}
 };

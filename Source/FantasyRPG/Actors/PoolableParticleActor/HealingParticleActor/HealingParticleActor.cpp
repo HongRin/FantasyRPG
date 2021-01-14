@@ -1,6 +1,7 @@
 #include "HealingParticleActor.h"
 
 #include "Components/HealerSkillArea/HealerSkillAreaComponent.h"
+#include "Components/HealerBehavior/HealerBehaviorComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Single/PlayerManager/PlayerManager.h"
 
@@ -25,6 +26,8 @@ AHealingParticleActor::AHealingParticleActor()
 	SetRootComponent(SkillParticleSystem);
 
 	SkillArea = CreateDefaultSubobject<UHealerSkillAreaComponent>(TEXT("SKILL_AREA_COMP"));
+
+	SetID(DEFAULT_SKILL);
 }
 
 void AHealingParticleActor::BeginPlay()
@@ -59,6 +62,18 @@ void AHealingParticleActor::PlayParticle(FVector loc, FRotator rot)
 	SkillParticleSystem->Activate(true);
 	SkillParticleSystem->SetWorldLocationAndRotation(loc, rot);
 	SkillArea->SetWorldLocationAndRotation(loc, rot);
+
+	if (SkillState == SKILL_BUFF)
+	{
+		FTimerHandle timerHandle;
+		GetWorld()->GetTimerManager().SetTimer(
+			timerHandle,
+			[this]() {
+				SetCanRecyclable(true);
+				SkillParticleSystem->Activate(false); },
+			10.0f,
+			false);
+	}
 }
 
 void AHealingParticleActor::UpdateSkillSet(bool bIsHealing)

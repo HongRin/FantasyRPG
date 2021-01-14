@@ -13,8 +13,8 @@
 
 #include "Widgets/ClosableWnd/DraggableWnd/StatusWnd/StatusWnd.h"
 #include "Widgets/ClosableWnd/DraggableWnd/StatusWnd/StatusWndRow.h"
-
 #include "Widgets/ClosableWnd/DraggableWnd/InventoryWnd/InventoryWnd.h"
+#include "Widgets/ClosableWnd/DraggableWnd/MercenaryWnd/MercenaryWnd.h"
 
 UPlayerWndControllerComponent::UPlayerWndControllerComponent()
 {
@@ -31,6 +31,10 @@ UPlayerWndControllerComponent::UPlayerWndControllerComponent()
 	if (BP_INVENTORY.Succeeded()) BPInventoryWndClass = BP_INVENTORY.Class;
 	else UE_LOG(LogTemp, Error, TEXT("PlayerWndControllerComponent.cpp :: %d LINE :: BP_INVENTORY is not loaded!"), __LINE__);
 
+	static ConstructorHelpers::FClassFinder<UMercenaryWnd> BP_MERCENARY_WND(
+		TEXT("WidgetBlueprint'/Game/Resources/Blueprints/Widgets/ClosableWnd/DraggableWnd/MercenaryWnd/BP_MercenaryWnd.BP_MercenaryWnd_C'"));
+	if (BP_MERCENARY_WND.Succeeded()) BPMercenaryWndClass = BP_MERCENARY_WND.Class;
+	else UE_LOG(LogTemp, Error, TEXT("PlayerWndControllerComponent.cpp :: %d LINE :: BP_INVENTORY is not loaded!"), __LINE__);
 }
 
 
@@ -82,4 +86,16 @@ void UPlayerWndControllerComponent::CloseInventory()
 	ClosableWndController->CloseWnd(false, InventoryWnd);
 
 	InventoryWnd = nullptr;
+}
+
+void UPlayerWndControllerComponent::OpenMercenaryWnd()
+{
+	MercenaryWnd = ClosableWndController->AddWnd<UMercenaryWnd>(BPMercenaryWndClass);
+}
+
+void UPlayerWndControllerComponent::CloseMercenaryWnd()
+{
+	ClosableWndController->CloseWnd(false, MercenaryWnd);
+	
+	MercenaryWnd = nullptr;
 }

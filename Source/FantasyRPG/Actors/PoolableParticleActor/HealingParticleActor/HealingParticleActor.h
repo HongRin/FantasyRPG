@@ -49,10 +49,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
-
 	FORCEINLINE virtual int32 GetID() const override
 	{
 		return Id;
+	}
+
+	FORCEINLINE virtual void SetID(int32 id)
+	{
+		Id = id;
 	}
 
 	// 재사용 가능 여부를 나타내는 변수에 대한 접근자 / 설정자

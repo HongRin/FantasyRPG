@@ -98,6 +98,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		PlayerWndController, &UPlayerWndControllerComponent::ToggleStatus);
 	PlayerInputComponent->BindAction(TEXT("Inventory"), EInputEvent::IE_Pressed,
 		PlayerWndController, &UPlayerWndControllerComponent::ToggleInventory);
+	PlayerInputComponent->BindAction(TEXT("MercenaryWnd"), EInputEvent::IE_Pressed,
+		PlayerWndController, &UPlayerWndControllerComponent::ToggleMercenaryWnd);
 
 
 	PlayerInputComponent->BindAction(TEXT("SkillTest"), EInputEvent::IE_Pressed,
