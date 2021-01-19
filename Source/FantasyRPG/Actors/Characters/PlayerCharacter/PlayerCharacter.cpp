@@ -8,6 +8,7 @@
 #include "Components/PlayerInteraction/PlayerInteractionComponent.h"
 #include "Components/PlayerInventory/PlayerInventoryComponent.h"
 #include "Components/PlayerWndController/PlayerWndControllerComponent.h"
+#include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 
 #include "AnimInstances/PlayerCharacter/PlayerAnimInstance.h"
 
@@ -178,6 +179,7 @@ void APlayerCharacter::InitializeComponets()
 	PlayerInteraction = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("INTERACTION_COMPONENT"));
 	PlayerInventory = CreateDefaultSubobject<UPlayerInventoryComponent>(TEXT("PLAYERINVENTORY_COMPONENT"));
 	PlayerWndController = CreateDefaultSubobject<UPlayerWndControllerComponent>(TEXT("PLAYER_WND_CONTROLLER"));
+	MercenaryState = CreateDefaultSubobject<UMercenaryStateComponent>(TEXT("MERCENARY_STATE"));
 
 	SpringArm->SetupAttachment(GetRootComponent());
 	Camera->SetupAttachment(SpringArm);

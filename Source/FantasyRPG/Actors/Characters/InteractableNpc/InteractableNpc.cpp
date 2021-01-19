@@ -10,6 +10,7 @@
 
 #include "Widgets/ClosableWnd/ClosableDialogWnd/ClosableDialogWnd.h"
 #include "Widgets/ClosableWnd/DraggableWnd/ShopWnd/ShopWnd.h"
+#include "Widgets/ClosableWnd/DraggableWnd/MercenaryShopWnd/MercenaryShopWnd.h"
 #include "Components/CanvasPanelSlot.h"
 
 
@@ -25,6 +26,11 @@ AInteractableNpc::AInteractableNpc()
 		TEXT("WidgetBlueprint'/Game/Resources/Blueprints/Widgets/ClosableWnd/DraggableWnd/ShopWnd/BP_ShopWnd.BP_ShopWnd_C'"));
 	if (BP_SHOP_WND.Succeeded()) ShopWndClass = BP_SHOP_WND.Class;
 	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: BP_SHOP_WND is not loaded!"), __LINE__); }
+
+	static ConstructorHelpers::FClassFinder<UMercenaryShopWnd> BP_MR_SHOP_WND(
+		TEXT("WidgetBlueprint'/Game/Resources/Blueprints/Widgets/ClosableWnd/DraggableWnd/MercenaryShopWnd/BP_MercenaryShopWnd.BP_MercenaryShopWnd_C'"));
+	if (BP_MR_SHOP_WND.Succeeded()) MercenaryShopWndClass = BP_MR_SHOP_WND.Class;
+	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: BP_MR_SHOP_WND is not loaded!"), __LINE__); }
 
 
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SKELETAL_MESH_COMPONENT"));
@@ -88,9 +94,21 @@ UClosableWnd* AInteractableNpc::OpenShop(class UClosableWnd* parentWnd, FName sh
 	FString contextString;
 	FShopInfo* shopInfo = DT_ShopInfo->FindRow<FShopInfo>(shopID, contextString);
 
-	UShopWnd* shopWnd = Cast<UShopWnd>(parentWnd->CreateChildClosableWnd(ShopWndClass));
+	if (ShopType == EShopType::ST_ITEM)
+	{
+		UShopWnd* shopWnd = Cast<UShopWnd>(parentWnd->CreateChildClosableWnd(ShopWndClass));
 
-	shopWnd->InitializeSaleList(shopInfo->SaleItems);
+		shopWnd->InitializeSaleList(shopInfo->SaleItems);
 
-	return shopWnd;
+		return shopWnd;
+	}
+	else if (ShopType == EShopType::ST_MERCENARY)
+	{
+		UMercenaryShopWnd* mercenaryShopWnd = Cast<UMercenaryShopWnd>(parentWnd->CreateChildClosableWnd(MercenaryShopWndClass));
+
+		mercenaryShopWnd->InitializeMercenaryShopWnd(shopInfo->SaleItems);
+
+		return mercenaryShopWnd;
+	}
+	else return nullptr;
 }

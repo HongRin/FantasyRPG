@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actors/InteractableActor/InteractableActor.h"
+#include "Enums/ShopType.h"
 #include "InteractableNpc.generated.h"
 
 UCLASS()
@@ -11,6 +12,7 @@ class FANTASYRPG_API AInteractableNpc : public AInteractableActor
 private:
 	class UDataTable* DT_ShopInfo;
 	TSubclassOf<class UShopWnd> ShopWndClass;
+	TSubclassOf<class UMercenaryShopWnd> MercenaryShopWndClass;
 
 private:
 	UPROPERTY()
@@ -22,6 +24,9 @@ private:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 		FName NpcCode;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Type")
+		EShopType ShopType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Default")
 		class USkeletalMeshComponent* Mesh;

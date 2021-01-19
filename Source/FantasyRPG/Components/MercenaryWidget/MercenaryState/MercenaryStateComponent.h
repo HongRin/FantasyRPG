@@ -13,8 +13,6 @@ class FANTASYRPG_API UMercenaryStateComponent : public UActorComponent
 private :
 	// 고용하고 있는 용병들을 나타냅니다.
 	TArray<FMercenarySlotInfo> ScoutMercenarys;
-
-		
 	class UDataTable* DT_MercenaryInfo;
 
 public:	

@@ -33,6 +33,8 @@ private :
 	class UPlayerInventoryComponent* PlayerInventory;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerWndController", meta = (AllowPrivateAccess = "true"))
 	class UPlayerWndControllerComponent* PlayerWndController;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerWndController", meta = (AllowPrivateAccess = "true"))
+	class UMercenaryStateComponent* MercenaryState;
 #pragma endregion
 
 #pragma region SKeletalMeshes
@@ -181,5 +183,6 @@ public :
 	FORCEINLINE class UPlayerInventoryComponent* GetPlayerInventory() const
 	{ return PlayerInventory; }
 
-
+	FORCEINLINE class UMercenaryStateComponent* GetMercenaryState() const
+	{ return MercenaryState; }
 };

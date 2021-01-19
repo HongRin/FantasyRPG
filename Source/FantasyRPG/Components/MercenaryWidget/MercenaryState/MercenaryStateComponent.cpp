@@ -33,6 +33,7 @@ void UMercenaryStateComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 void UMercenaryStateComponent::InitializeScoutMercenarys()
 {
+
 }
 
 void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
