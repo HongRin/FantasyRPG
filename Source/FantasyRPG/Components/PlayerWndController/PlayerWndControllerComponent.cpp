@@ -91,6 +91,8 @@ void UPlayerWndControllerComponent::CloseInventory()
 void UPlayerWndControllerComponent::OpenMercenaryWnd()
 {
 	MercenaryWnd = ClosableWndController->AddWnd<UMercenaryWnd>(BPMercenaryWndClass);
+
+	MercenaryWnd->InitializeMercenaryWnd();
 }
 
 void UPlayerWndControllerComponent::CloseMercenaryWnd()
