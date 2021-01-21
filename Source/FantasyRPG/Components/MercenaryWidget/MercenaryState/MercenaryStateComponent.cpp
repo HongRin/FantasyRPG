@@ -1,10 +1,14 @@
 #include "MercenaryStateComponent.h"
 
 #include "Engine/DataTable.h"
-#include "Structures/MercenaryInfo/MercenaryInfo.h"
+#include "Engine/EngineTypes.h"
+
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
 #include "Single/GameInstance/FRGameInstance.h"
 #include "Single/PlayerManager/PlayerManager.h"
+
+#include "Structures/MercenaryBlueprint/MercenaryBlueprint.h"
 
 
 UMercenaryStateComponent::UMercenaryStateComponent()
@@ -15,12 +19,19 @@ UMercenaryStateComponent::UMercenaryStateComponent()
 		TEXT("DataTable'/Game/Resources/DataTables/DT_MercenaryInfo.DT_MercenaryInfo'"));
 	if (DT_MERCENARY_INFO.Succeeded()) DT_MercenaryInfo = DT_MERCENARY_INFO.Object;
 	else UE_LOG(LogTemp, Error, TEXT("UMercenaryStateComponent.cpp::%d::LINE:: DT_MERCENARY_INFO is not loaded!"), __LINE__);
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_MERCENARY_BP(
+		TEXT("DataTable'/Game/Resources/DataTables/DT_MercenaryBlueprint.DT_MercenaryBlueprint'"));
+	if (DT_MERCENARY_BP.Succeeded()) DT_MercenaryBP = DT_MERCENARY_BP.Object;
+	else UE_LOG(LogTemp, Error, TEXT("UMercenaryStateComponent.cpp::%d::LINE:: DT_MERCENARY_BP is not loaded!"), __LINE__);
 }
 
 
 void UMercenaryStateComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GameInst = Cast<UFRGameInstance>(GetWorld()->GetGameInstance());
 
 }
 
@@ -42,6 +53,34 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 	FMercenaryInfo* mercenaryInfo = DT_MercenaryInfo->FindRow<FMercenaryInfo>(
 		mercenaryCode, contextString);
 
+	FMercenaryBlueprint* mercenaryblueprint = DT_MercenaryBP->FindRow<FMercenaryBlueprint>(
+		mercenaryCode, contextString);
+
 	ScoutMercenarys.Add(FMercenarySlotInfo(mercenaryCode));
+
+	UBlueprint* mercenaryBPClass = Cast<UBlueprint>(
+		GameInst->GetStreamableManager()->LoadSynchronous(mercenaryblueprint->BlueprintPath));
+
+	if (IsValid(mercenaryBPClass))
+	{
+		// Cast as the AnimInstanceClass
+		TSubclassOf<AMercenaryCharacter> bpInstClass =
+			static_cast<TSubclassOf<AMercenaryCharacter>>(mercenaryBPClass->GeneratedClass);
+	
+		AMercenaryCharacter* mercenaryCharacter =
+			GetWorld()->SpawnActor<AMercenaryCharacter>(
+			bpInstClass, GetOwner()->GetActorLocation() - FVector(30.0f, 30.0f, 0.0f), FRotator::ZeroRotator);
+
+		mercenaryCharacter->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+
+		MercenaryActors.Add(mercenaryCharacter);
+	}
 }
+
+//FMercenaryInfo* UMercenaryStateComponent::GetScoutMercenaryInfo(int32 index)
+//{
+//	FString contextString;
+//	FMercenaryInfo* mercenaryInfo = DT_MercenaryInfo->FindRow<FMercenaryInfo>(
+//		ScoutMercenarys[index].MercenaryCode, contextString);
+//}
 

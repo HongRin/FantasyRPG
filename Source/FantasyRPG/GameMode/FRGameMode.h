@@ -11,5 +11,4 @@ class FANTASYRPG_API AFRGameMode : public AGameModeBase
 
 public :
 	AFRGameMode();
-	
 };

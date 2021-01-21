@@ -1,5 +1,8 @@
 #include "MercenaryCharacter.h"
 
+#include "Engine/Engine.h"
+
+
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
 #include "Actors/Controllers/MercenaryController/MercenaryController.h"
 #include "Actors/Controllers/PlayerController/RPGPlayerController.h"
@@ -30,7 +33,6 @@ AMercenaryCharacter::AMercenaryCharacter()
 	InitializeComponent();
 
 	SetGenericTeamId(TEAM_MERCENRAY);
-
 }
  
 void AMercenaryCharacter::BeginPlay()

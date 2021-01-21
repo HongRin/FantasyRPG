@@ -2,6 +2,7 @@
 
 #include "FantasyRPG.h"
 #include "Components/ActorComponent.h"
+#include "Structures/MercenaryInfo/MercenaryInfo.h"
 #include "Structures/MercenarySlotInfo/MercenarySlotInfo.h"
 #include "MercenaryStateComponent.generated.h"
 
@@ -13,7 +14,15 @@ class FANTASYRPG_API UMercenaryStateComponent : public UActorComponent
 private :
 	// 고용하고 있는 용병들을 나타냅니다.
 	TArray<FMercenarySlotInfo> ScoutMercenarys;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+		TArray<class AMercenaryCharacter*> MercenaryActors;
+
 	class UDataTable* DT_MercenaryInfo;
+
+	class UDataTable* DT_MercenaryBP;
+
+	class UFRGameInstance* GameInst;
 
 public:	
 	UMercenaryStateComponent();
@@ -36,4 +45,6 @@ public :
 	{
 		return ScoutMercenarys;
 	}
+
+	//FMercenaryInfo* GetScoutMercenaryInfo(int32 index);
 };
