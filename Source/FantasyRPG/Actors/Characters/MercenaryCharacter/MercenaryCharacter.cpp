@@ -59,6 +59,8 @@ void AMercenaryCharacter::Tick(float DeltaTime)
 void AMercenaryCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
+
+	UE_LOG(LogTemp, Warning, TEXT("MercenaryHp :: %.1f"), Hp);
 }
 
 void AMercenaryCharacter::OnCharacterDie()

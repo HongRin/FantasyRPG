@@ -31,5 +31,4 @@ private :
 
 public :
 	void OpenReinforceWnd(FMercenaryInfo* mercenaryInfo);
-
 };

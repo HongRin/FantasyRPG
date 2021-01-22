@@ -2,6 +2,7 @@
 
 #include "Actors/Controllers/PlayerController/RPGPlayerController.h"
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
 #include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 #include "Components/ScrollBox.h"
@@ -51,12 +52,11 @@ void UMercenaryWnd::NativeConstruct()
 
 void UMercenaryWnd::InitializeMercenaryWnd()
 {
-	if (MercenaryState->GetScoutMercenarys().Num() == 0) return;
-	for (int i = 0; i < MercenaryState->GetScoutMercenarys().Num(); ++i)
+	if (MercenaryState->GetMercenaryActors().Num() == 0) return;
+	for (int i = 0; i < MercenaryState->GetMercenaryActors().Num(); ++i)
 	{
 		FString contextString;
-		FMercenaryInfo* mercenaryInfo = DT_MercenaryInfo->FindRow<FMercenaryInfo>(
-			MercenaryState->GetScoutMercenarys()[i].MercenaryCode, contextString);
+		FMercenaryInfo* mercenaryInfo = MercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo();
 
 		if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_HEALER)
 		{

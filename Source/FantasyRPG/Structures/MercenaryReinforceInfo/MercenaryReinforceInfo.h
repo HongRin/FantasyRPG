@@ -42,6 +42,9 @@ public:
 	float ReinforcementProbability;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bMaximumLevel;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float value1;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float value2;

@@ -46,5 +46,8 @@ public :
 		return ScoutMercenarys;
 	}
 
-	//FMercenaryInfo* GetScoutMercenaryInfo(int32 index);
+	FORCEINLINE const TArray<class AMercenaryCharacter*> GetMercenaryActors() const
+	{
+		return MercenaryActors;
+	}
 };

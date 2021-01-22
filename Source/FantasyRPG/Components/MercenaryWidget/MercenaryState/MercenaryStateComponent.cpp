@@ -69,18 +69,10 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 	
 		AMercenaryCharacter* mercenaryCharacter =
 			GetWorld()->SpawnActor<AMercenaryCharacter>(
-			bpInstClass, GetOwner()->GetActorLocation() - FVector(30.0f, 30.0f, 0.0f), FRotator::ZeroRotator);
+			bpInstClass, GetOwner()->GetActorLocation() - FVector(FMath::RandRange(30.0f, 50.0f), FMath::RandRange(30.0f, 50.0f), 0.0f), FRotator::ZeroRotator);
 
 		mercenaryCharacter->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 		MercenaryActors.Add(mercenaryCharacter);
 	}
 }
-
-//FMercenaryInfo* UMercenaryStateComponent::GetScoutMercenaryInfo(int32 index)
-//{
-//	FString contextString;
-//	FMercenaryInfo* mercenaryInfo = DT_MercenaryInfo->FindRow<FMercenaryInfo>(
-//		ScoutMercenarys[index].MercenaryCode, contextString);
-//}
-

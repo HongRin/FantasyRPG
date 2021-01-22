@@ -6,6 +6,7 @@
 
 #include "Actors/Controllers/PlayerController/RPGPlayerController.h"
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
 #include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 
@@ -71,6 +72,8 @@ void UMRReinforceWnd::InitializeButtonList()
 		ScrollBox_ButtonList->AddChild(buttonList);
 		buttonList->SetMRReinforceWnd(this);
 		buttonList->InitializeButtonList(mercenaryInfo);
+
+		UE_LOG(LogTemp, Warning, TEXT("GetMercenaryActors()[%d] :: Atk  :: %.1f"), i, MercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo()->Atk);
 	}
 }
 
@@ -79,9 +82,11 @@ void UMRReinforceWnd::OpenReinforceWnd(FMercenaryInfo* mercenaryInfo)
 	if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_KNIGHT)
 	{
 		UKnightReinforce* knightReinforce = Cast<UKnightReinforce>(CreateChildClosableWnd(BP_KnightReinforce));
+		knightReinforce->UpdateKingitReinforce(mercenaryInfo);
 	}
 	if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_HEALER)
 	{
 		UHealerReinforce* helaerReinforce = Cast<UHealerReinforce>(CreateChildClosableWnd(BP_HealerReinforce));
+		helaerReinforce->UpdateHealerReinforce(mercenaryInfo);
 	}
 }
