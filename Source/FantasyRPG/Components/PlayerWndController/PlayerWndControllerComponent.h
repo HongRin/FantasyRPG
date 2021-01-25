@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "FantasyRpg.h"
 #include "Components/ActorComponent.h"
 #include "PlayerWndControllerComponent.generated.h"
 

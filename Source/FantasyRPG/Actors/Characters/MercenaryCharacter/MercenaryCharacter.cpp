@@ -19,6 +19,8 @@
 #include "BrainComponent.h"
 
 #include "Widgets/HpableCharacterWidget/HpableCharacterWidget.h"
+#include "Widgets/HpableCharacterWidget/PlayerCharacterWidget/PlayerCharacterWidget.h"
+#include "Widgets/ClosableWnd/MercenaryHpWnd/MercenaryHpWnd.h"
 
 AMercenaryCharacter::AMercenaryCharacter()
 {
@@ -60,7 +62,8 @@ void AMercenaryCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const
 {
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
 
-	UE_LOG(LogTemp, Warning, TEXT("MercenaryHp :: %.1f"), Hp);
+	if (PlayerCharacter->GetPlayerController()->GetPlayerCharacterWidgetInstance()->GetMercenaryHpWnd()->OnTakeDamageEvent.IsBound())
+		PlayerCharacter->GetPlayerController()->GetPlayerCharacterWidgetInstance()->GetMercenaryHpWnd()->OnTakeDamageEvent.Broadcast();
 }
 
 void AMercenaryCharacter::OnCharacterDie()

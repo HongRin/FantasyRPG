@@ -14,6 +14,8 @@
 #include "Structures/MercenaryInfo/MercenaryInfo.h"
 
 #include "Widgets/ClosableWnd/DraggableWnd/MercenaryShopWnd/MercenaryShopWnd.h"
+#include "Widgets/HpableCharacterWidget/PlayerCharacterWidget/PlayerCharacterWidget.h"
+#include "Widgets/ClosableWnd/MercenaryHpWnd/MercenaryHpWnd.h"
 
 UMercenaryRow::UMercenaryRow(const FObjectInitializer& ObjInitializer) :
 	Super(ObjInitializer)
@@ -45,5 +47,7 @@ void UMercenaryRow::UpdateMercenaryRow(FMercenaryInfo* mercenaryInfo)
 void UMercenaryRow::OnScoutButtonClicked()
 {
 	MercenaryState->ScoutMercenary(MercenaryInfo->MercenaryCode);
+	GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
+		GetMercenaryHpWnd()->AddMercenaryHpList(MercenaryInfo);
 	RemoveFromParent();
 }

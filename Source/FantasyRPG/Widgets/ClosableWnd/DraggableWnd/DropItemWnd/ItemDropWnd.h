@@ -48,6 +48,7 @@ public:
 		Items[index] = FItemSlotInfo();
 	}
 
+
 private:
 	UFUNCTION()
 		void ItemAllDrop();

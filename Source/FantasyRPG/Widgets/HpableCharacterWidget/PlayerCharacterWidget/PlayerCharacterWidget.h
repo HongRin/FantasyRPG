@@ -11,6 +11,7 @@ class FANTASYRPG_API UPlayerCharacterWidget : public UHpableCharacterWidget
 
 private:
 	class UCanvasPanel* Canvas_ClosableWnds;
+	class UMercenaryHpWnd* BP_MercenaryHpWnd;
 	class UProgressBar* ProgressBar_HP;
 
 protected:
@@ -24,5 +25,10 @@ public:
 	FORCEINLINE class UCanvasPanel* GetClosableWnds() const
 	{
 		return Canvas_ClosableWnds;
+	}
+
+	FORCEINLINE class UMercenaryHpWnd* GetMercenaryHpWnd() const
+	{
+		return BP_MercenaryHpWnd;
 	}
 };

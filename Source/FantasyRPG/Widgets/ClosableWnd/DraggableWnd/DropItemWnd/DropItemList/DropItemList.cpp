@@ -69,6 +69,13 @@ FEventReply UDropItemList::ItemDrop(FGeometry MyGeometry, const FPointerEvent& M
 		}
 	}
 
+	for (int32 i = 0; i < ItemDropWnd->GetDropItems().Num(); ++i)
+	{
+		if (!ItemDropWnd->GetDropItems()[i].IsEmpty()) return Reply;
+	}
+	ItemDropWnd->GetDropItemInstance()->Destroy();
+	ItemDropWnd->OnCloseButtonClicked();
+
 	return Reply;
 }
 

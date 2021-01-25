@@ -3,6 +3,7 @@
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 
+#include "Widgets/ClosableWnd/MercenaryHpWnd/MercenaryHpWnd.h"
 #include "Widgets/ClosableWnd/ClosableWnd.h"
 
 void UPlayerCharacterWidget::NativeOnInitialized()
@@ -10,6 +11,7 @@ void UPlayerCharacterWidget::NativeOnInitialized()
 	Super::NativeOnInitialized();
 	ProgressBar_HP = Cast<UProgressBar>(GetWidgetFromName(TEXT("ProgressBar_HP")));
 	Canvas_ClosableWnds = Cast<UCanvasPanel>(GetWidgetFromName("Canvas_ClosableWnds"));
+	BP_MercenaryHpWnd = Cast<UMercenaryHpWnd>(GetWidgetFromName("BP_MercenaryHpWnd"));
 
 	SetDesiredSizeInViewport(FVector2D(1920.0f, 1080.0f));
 }

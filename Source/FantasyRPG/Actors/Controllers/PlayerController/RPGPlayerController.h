@@ -44,6 +44,12 @@ public :
 	{
 		return ClosableWndController;
 	}
+
+	FORCEINLINE class UPlayerCharacterWidget* GetPlayerCharacterWidgetInstance() const
+	{
+		return PlayerCharacterWidgetInstance;
+	}
+
 	void ChangeViewTarget(class AActor* newViewTarget);
 
 	
