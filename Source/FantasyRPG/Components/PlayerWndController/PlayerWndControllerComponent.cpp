@@ -46,9 +46,9 @@ void UPlayerWndControllerComponent::BeginPlay()
 
 	PlayerInfo = GetManager(UPlayerManager)->GetPlayerInfo();
 
-	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>((GetManager(UPlayerManager)->GetPlayerController())->GetPawn());
+	PlayerCharacter = Cast<APlayerCharacter>((GetManager(UPlayerManager)->GetPlayerController())->GetPawn());
 
-	PlayerInventory = playerCharacter->GetPlayerInventory();
+	PlayerInventory = PlayerCharacter->GetPlayerInventory();
 }
 
 void UPlayerWndControllerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -57,12 +57,26 @@ void UPlayerWndControllerComponent::TickComponent(float DeltaTime, ELevelTick Ti
 
 }
 
+void UPlayerWndControllerComponent::OpenWndEvent()
+{
+	PlayerCharacter->GetPlayerController()->bShowMouseCursor = true;
+	PlayerCharacter->GetPlayerController()->SetInputMode(FInputModeGameAndUI());
+}
+
+void UPlayerWndControllerComponent::CloseWndEvent()
+{
+	PlayerCharacter->GetPlayerController()->bShowMouseCursor = false;
+	PlayerCharacter->GetPlayerController()->SetInputMode(FInputModeGameOnly());
+}
+
 void UPlayerWndControllerComponent::OpenStatus()
 {
 	// 스테이터스 창 객체를 생성합니다.
 	StatusWnd = ClosableWndController->AddWnd<UStatusWnd>(BPStatusWndClass);
 
 	StatusWnd->UpdateStatPointText(FText::FromString(FString::FromInt(PlayerInfo->StatPoint)));
+
+	OpenWndEvent();
 }
 
 void UPlayerWndControllerComponent::CloseStatus()
@@ -70,6 +84,8 @@ void UPlayerWndControllerComponent::CloseStatus()
 	ClosableWndController->CloseWnd(false, StatusWnd);
 
 	StatusWnd = nullptr;
+
+	CloseWndEvent();
 }
 
 void UPlayerWndControllerComponent::OpenInventory()
@@ -79,6 +95,8 @@ void UPlayerWndControllerComponent::OpenInventory()
 
 	// 인벤토리 컴포넌트를 설정합니다.
 	 InventoryWnd->InitializeInventoryWnd(PlayerInventory);
+
+	 OpenWndEvent();
 }
 
 void UPlayerWndControllerComponent::CloseInventory()
@@ -86,6 +104,8 @@ void UPlayerWndControllerComponent::CloseInventory()
 	ClosableWndController->CloseWnd(false, InventoryWnd);
 
 	InventoryWnd = nullptr;
+
+	CloseWndEvent();
 }
 
 void UPlayerWndControllerComponent::OpenMercenaryWnd()
@@ -93,11 +113,15 @@ void UPlayerWndControllerComponent::OpenMercenaryWnd()
 	MercenaryWnd = ClosableWndController->AddWnd<UMercenaryWnd>(BPMercenaryWndClass);
 
 	MercenaryWnd->InitializeMercenaryWnd();
+
+	OpenWndEvent();
 }
 
 void UPlayerWndControllerComponent::CloseMercenaryWnd()
 {
 	ClosableWndController->CloseWnd(false, MercenaryWnd);
-	
+
 	MercenaryWnd = nullptr;
+	
+	CloseWndEvent();
 }

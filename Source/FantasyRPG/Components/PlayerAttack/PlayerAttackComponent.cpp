@@ -1,5 +1,7 @@
 #include "PlayerAttackComponent.h"
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
+#include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 #include "Single/PlayerManager/PlayerManager.h"
 
 UPlayerAttackComponent::UPlayerAttackComponent()
@@ -80,6 +82,13 @@ void UPlayerAttackComponent::UpdateAttackRange(float radius, float length)
 {
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add(PlayerCharacter);
+
+	UMercenaryStateComponent* mercenaryState = PlayerCharacter->GetMercenaryState();
+	
+	for (int i = 0; i < mercenaryState->GetMercenaryActors().Num(); ++i)
+	{
+		actorsToIgnore.Add(mercenaryState->GetMercenaryActors()[i]);
+	}
 
 	TArray<FHitResult> hitResults;
 

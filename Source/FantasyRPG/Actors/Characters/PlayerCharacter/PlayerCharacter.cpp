@@ -39,7 +39,7 @@ APlayerCharacter::APlayerCharacter()
 
 	bIsMoveable = true;
 
-	GetCharacterMovement()->JumpZVelocity = 400;
+	GetCharacterMovement()->JumpZVelocity = 500;
 
 	LoadAsset();
 

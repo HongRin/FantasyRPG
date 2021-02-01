@@ -49,9 +49,6 @@ void UPlayerInteractionComponent::TryInteraction()
 	PlayerCharacter->GetPlayerController()->bShowMouseCursor = true;
 
 
-
-
-
 	InteractableActors[0]->StartInteraction(interactionFinEvent);
 	bIsInteracting = true;
 

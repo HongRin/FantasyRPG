@@ -57,6 +57,11 @@ void ADungeonPortal::OnPortalOverlap(UPrimitiveComponent* OverlappedComponent,
 		if (playerCharacter->GetCapsuleComponent() == OtherComp)
 		{
 			UDungeonChoiceWnd* dungeonChoiceWnd = playerCharacter->GetPlayerController()->GetClosableWndControllerComponent()->AddWnd<UDungeonChoiceWnd>(BP_DungeonChoiceWnd);
+			dungeonChoiceWnd->InitializeDCW(DCWCode);
+			playerCharacter->ProhibitMove();
+
+			playerCharacter->GetPlayerController()->SetInputMode(FInputModeUIOnly());
+			playerCharacter->GetPlayerController()->bShowMouseCursor = true;
 		}
 	}
 }

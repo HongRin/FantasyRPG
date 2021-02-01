@@ -28,6 +28,7 @@ private :
 
 #pragma region Components
 private :
+	class APlayerCharacter* PlayerCharacter;
 	class UClosableWndControllerComponent* ClosableWndController;
 	class UPlayerInventoryComponent* PlayerInventory;
 #pragma endregion
@@ -43,6 +44,10 @@ protected:
 
 public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+private :
+	void OpenWndEvent();
+	void CloseWndEvent();
 
 private :
 	void OpenStatus();

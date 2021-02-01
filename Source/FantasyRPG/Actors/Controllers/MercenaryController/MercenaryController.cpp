@@ -31,6 +31,8 @@ void AMercenaryController::OnPossess(APawn* InPawn)
 
 	MercenaryCharacterInstance = Cast<AMercenaryCharacter>(InPawn);
 
+
+
 	if (IsValid(MercenaryBehaviorTree))
 	{
 		RunBehaviorTree(MercenaryBehaviorTree);

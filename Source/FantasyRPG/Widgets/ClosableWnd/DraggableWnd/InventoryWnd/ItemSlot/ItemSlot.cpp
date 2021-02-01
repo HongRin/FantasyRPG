@@ -54,6 +54,7 @@ void UItemSlot::NativeConstruct()
 
 	Image_ItemSprite = Cast<UImage>(GetWidgetFromName(TEXT("Image_ItemSprite")));
 	Text_ItemCount = Cast<UTextBlock>(GetWidgetFromName(TEXT("Text_ItemCount")));
+
 }
 
 FReply UItemSlot::NativeOnMouseButtonDown(
@@ -61,14 +62,19 @@ FReply UItemSlot::NativeOnMouseButtonDown(
 {
 	FReply retVal = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
+
+	UE_LOG(LogTemp, Warning, TEXT("NativeOnMouseButtonDown Called!"));
+
 	// 슬롯이 비어있는지 확인합니다.
 	if (GetItemSlotInfo().IsEmpty())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("SlotEmpty"));
 		return retVal;
 	}
 	// 해당 슬롯이 비어있지 않다면
 	else
 	{
+		UE_LOG(LogTemp, Warning, TEXT("return DragOnDrop!"));
 		// 드래그 앤 드롭 작업을 생성하며, 작업 결과를 반환합니다.
 		return UWidgetBlueprintLibrary::DetectDragIfPressed(
 			InMouseEvent, this, EKeys::LeftMouseButton).NativeReply;
@@ -81,7 +87,6 @@ void UItemSlot::NativeOnDragDetected(
 	UDragDropOperation*& OutOperation)
 {
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
-
 
 	// 드래그 앤 드롭 작업 객체를 생성합니다.
 	UItemSlotDragDropOperation* dragDropOp = Cast<UItemSlotDragDropOperation>(UWidgetBlueprintLibrary::CreateDragDropOperation(
@@ -107,6 +112,7 @@ void UItemSlot::NativeOnDragDetected(
 		// 드래깅을 시작한 슬롯을 설정합니다.
 		dragDropOp->DraggingSlot = this;
 	}
+	else UE_LOG(LogTemp, Warning, TEXT("dragDropOp is not Vaild!"));
 
 	// 출력용 매개 변수에 드래그 앤 드롭 작업 객체를 설정합니다.
 	OutOperation = dragDropOp;

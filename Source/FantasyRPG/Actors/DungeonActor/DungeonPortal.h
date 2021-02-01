@@ -19,6 +19,9 @@ private :
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UParticleSystemComponent* ParticleSystem;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	FName DCWCode;
+
 public:	
 	ADungeonPortal();
 

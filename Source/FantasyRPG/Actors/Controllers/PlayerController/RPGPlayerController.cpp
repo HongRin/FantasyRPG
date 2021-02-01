@@ -31,6 +31,8 @@ void ARPGPlayerController::OnPossess(APawn* aPawn)
 	Super::OnPossess(aPawn);
 
 	GetPlayerCharacterWidgetInstance();
+
+	SetInputMode(FInputModeGameOnly());
 }
 
 void ARPGPlayerController::InputMouseX(float axis)

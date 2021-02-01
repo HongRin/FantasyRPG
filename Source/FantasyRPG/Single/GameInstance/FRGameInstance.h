@@ -19,6 +19,8 @@ class FANTASYRPG_API UFRGameInstance : public UGameInstance
 private:
 	TArray<UManagerClass*> ManagerClasses;
 
+	// 다음으로 로드할 레벨 이름을 저장합니다.
+	FName NextLevelName;
 
 private:
 	void RegisterManagerClass(TSubclassOf<UManagerClass> managerClass);
@@ -38,8 +40,16 @@ public:
 		return nullptr;
 	}
 
+	virtual void Shutdown() override;
+
 public :
 	FORCEINLINE FStreamableManager* GetStreamableManager()
 	{ return &UAssetManager::GetStreamableManager(); }
 
+	FORCEINLINE void SetNextLevelName(FName nextLevelName)
+	{ NextLevelName = nextLevelName; }
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE FName GetNextLevelName() const
+	{ return NextLevelName; }
 };
