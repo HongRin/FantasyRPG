@@ -45,6 +45,8 @@ private :
 
 	class UDataTable* DTItemInfo;
 
+	class ADungeonLevel* DungeonLevel;
+
 	FMonsterInfo MonsterInfo;
 
 	FGenericTeamId TeamId;

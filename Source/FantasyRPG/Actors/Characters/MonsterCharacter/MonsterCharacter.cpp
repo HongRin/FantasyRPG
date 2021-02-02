@@ -12,6 +12,8 @@
 
 #include "BrainComponent.h"
 
+#include "Level/Dungeon/DungeonLevel.h"
+
 #include "Widgets/HpableCharacterWidget/HpableCharacterWidget.h"
 
 #include "AnimInstances/MonsterCharacter/MonsterAnimInstance.h"
@@ -67,6 +69,9 @@ void AMonsterCharacter::BeginPlay()
 	else Tags.Add(TEXT("Monster"));
 
 	SetDropItems();
+
+	DungeonLevel = Cast<ADungeonLevel>(GetWorld()->GetLevelScriptActor());
+	DungeonLevel->AddMonsterCharacters(this);
 }
 
 void AMonsterCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
@@ -90,10 +95,13 @@ void AMonsterCharacter::OnCharacterDie()
 		[this]() { 
 			if (!(DropItems.Num() == 0))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("DropItemSpawn"));
 				ADropItem::SpawnItem(this, DropItems, GetActorLocation(), GetActorRotation());
 			}
-			Destroy(); },
+			DungeonLevel->RemoveMonsterCharacters(this);
+			if (DungeonLevel->DungeonClear())
+				DungeonLevel->ReturnToTown();
+			Destroy();
+		},
 		3.0f,
 		false);
 }
