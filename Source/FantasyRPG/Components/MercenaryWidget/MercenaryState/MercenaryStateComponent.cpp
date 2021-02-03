@@ -67,11 +67,15 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 		TSubclassOf<AMercenaryCharacter> bpInstClass =
 			static_cast<TSubclassOf<AMercenaryCharacter>>(mercenaryBPClass->GeneratedClass);
 	
+		auto capsuleComponent = Cast<ACharacter>(GetOwner())->GetCapsuleComponent();
+
 		AMercenaryCharacter* mercenaryCharacter =
 			GetWorld()->SpawnActor<AMercenaryCharacter>(
-			bpInstClass, GetOwner()->GetActorLocation() - FVector(FMath::RandRange(30.0f, 50.0f), FMath::RandRange(30.0f, 50.0f), 0.0f), FRotator::ZeroRotator);
+			bpInstClass, 
+				GetOwner()->GetActorLocation() + (FVector::UpVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 6.0f)),
+				FRotator::ZeroRotator);
 
-		mercenaryCharacter->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+		UE_LOG(LogTemp, Warning, TEXT("IsValid(mercenaryCharacter) :: %d"), IsValid(mercenaryCharacter));
 
 		MercenaryActors.Add(mercenaryCharacter);
 	}

@@ -37,7 +37,7 @@ void UMercenaryHpRow::InitializeMercenaryHpRow(FMercenaryInfo* mercenaryInfo)
 	}
 
 	ProgressBar_Hp->SetPercent(MercenaryCharacter->GetHp() / MercenaryCharacter->GetMaxHp());
-
+	
 	MercenaryHpWnd->OnTakeDamageEvent.AddUObject(this, &UMercenaryHpRow::UpdateMercenaryHp);
 
 }

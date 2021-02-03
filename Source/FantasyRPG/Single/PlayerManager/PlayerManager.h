@@ -16,7 +16,7 @@ private:
     FPlayerInfo PlayerInfo;
 
     UPROPERTY()
-        class ARPGPlayerController* PlayerController;
+    class ARPGPlayerController* PlayerController;
 
 
 public:

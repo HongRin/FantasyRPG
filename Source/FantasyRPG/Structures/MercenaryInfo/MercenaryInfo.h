@@ -27,6 +27,9 @@ public:
 	FSoftObjectPath MercenaryControllerClassPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FSoftObjectPath MercernaryIcon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FText MercenaryName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

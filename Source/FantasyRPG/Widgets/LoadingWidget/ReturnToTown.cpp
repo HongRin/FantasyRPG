@@ -15,18 +15,15 @@ void UReturnToTown::NativeConstruct()
 	FTimerHandle timerHandle;
 	GetWorld()->GetTimerManager().SetTimer(
 		timerHandle,
-		[&timerHandle, this]() {
+		[this]() {
 			--Time;
 			if (Time == 0)
 			{
 				Cast<UFRGameInstance>(GetGameInstance())->SetNextLevelName(FName(TEXT("GameMap")));
 				UGameplayStatics::OpenLevel(this, FName(TEXT("LoadingLevel")));
-
-				GetWorld()->GetTimerManager().ClearTimer(timerHandle);
 			}
 			Text_Loading->SetText(FText::FromString(FString::FromInt(Time) + FString(TEXT("초 후 마을로 이동합니다."))));
 		},
 		1.0f,
 			true);
-
 }
