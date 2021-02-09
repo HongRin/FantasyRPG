@@ -72,10 +72,8 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 		AMercenaryCharacter* mercenaryCharacter =
 			GetWorld()->SpawnActor<AMercenaryCharacter>(
 			bpInstClass, 
-				GetOwner()->GetActorLocation() + (FVector::UpVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 6.0f)),
+				GetOwner()->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 2.0f)),
 				FRotator::ZeroRotator);
-
-		UE_LOG(LogTemp, Warning, TEXT("IsValid(mercenaryCharacter) :: %d"), IsValid(mercenaryCharacter));
 
 		MercenaryActors.Add(mercenaryCharacter);
 	}

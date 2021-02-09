@@ -2,7 +2,9 @@
 
 #include "FantasyRPG.h"
 #include "Structures/Player/PlayerInfo.h"
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 #include "Single/ManagerClass/ManagerClass.h"
+#include "Structures/MercenaryInfo/MercenaryInfo.h"
 #include "PlayerManager.generated.h"
 
 UCLASS()
@@ -18,6 +20,8 @@ private:
     UPROPERTY()
     class ARPGPlayerController* PlayerController;
 
+    UPROPERTY()
+    TArray<AMercenaryCharacter> ParticipateMercenary;
 
 public:
     virtual void InitManagerClass() override;
@@ -28,5 +32,13 @@ public:
 
     class ARPGPlayerController* GetPlayerController();
 
+    FORCEINLINE void SetParticipateMercenary(TArray<AMercenaryCharacter> participateMercenary)
+    {
+        ParticipateMercenary = participateMercenary;
+    }
 
+    FORCEINLINE const TArray<AMercenaryCharacter> GetParticipateMercenary() const
+    {
+        return ParticipateMercenary;
+    }
 };

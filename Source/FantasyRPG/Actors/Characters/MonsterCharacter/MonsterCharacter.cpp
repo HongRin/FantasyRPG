@@ -169,8 +169,6 @@ void AMonsterCharacter::SetDropItems()
 {
 	FString contextString;
 
-	UE_LOG(LogTemp, Warning, TEXT("MonsterInfo.DropItemCode.Num()::%d"), MonsterInfo.DropItemCode.Num());
-
 	for (int i = 0; i < MonsterInfo.DropItemCode.Num(); ++i)
 	{
 		FItemInfo* itemInfo = DTItemInfo->FindRow<FItemInfo>(

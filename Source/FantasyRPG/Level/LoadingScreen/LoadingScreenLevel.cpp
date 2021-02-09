@@ -18,9 +18,9 @@ ALoadingScreenLevel::ALoadingScreenLevel()
 void ALoadingScreenLevel::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	CreateWidget<UUserWidget>(GetWorld(), BP_LoadingScreen)->AddToViewport();
-
+	
 	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetManager(UPlayerManager)->GetPlayerController()->GetPawn());
 	
 	playerCharacter->SetHp(GetManager(UPlayerManager)->GetPlayerInfo()->MaxHp);

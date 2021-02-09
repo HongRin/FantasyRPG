@@ -1,9 +1,11 @@
 #include "PlayerManager.h"
+#include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
 #include "Actors/Controllers/PlayerController/RPGPlayerController.h"
+#include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
+
 
 void UPlayerManager::InitManagerClass()
 {
-
 }
 
 ARPGPlayerController* UPlayerManager::GetPlayerController()
@@ -13,3 +15,4 @@ ARPGPlayerController* UPlayerManager::GetPlayerController()
 
 	return PlayerController;
 }
+

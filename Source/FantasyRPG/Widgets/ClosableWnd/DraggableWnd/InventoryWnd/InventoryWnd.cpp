@@ -77,4 +77,16 @@ void UInventoryWnd::UpdateInventorySlots()
 {
 	for (auto slot : InventorySlots)
 		slot->UpdateItemSlot();
+	
+	int32 value = 1;
+
+	switch (value)
+	{
+	case 1:
+		UE_LOG(LogTemp, Warning, TEXT("value :: %d"), value);
+		break;
+	case 2:
+		UE_LOG(LogTemp, Warning, TEXT("value :: %d"), value);
+		break;
+	}
 }

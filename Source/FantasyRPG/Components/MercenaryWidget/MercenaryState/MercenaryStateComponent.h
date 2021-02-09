@@ -56,6 +56,11 @@ public :
 		return MercenaryActors;
 	}
 
+	FORCEINLINE const TArray<class AMercenaryCharacter*> GetParticipatedMercenarys() const
+	{
+		return ParticipatedMercenarys;
+	}
+
 	FORCEINLINE void ParticipateMerecenary(AMercenaryCharacter* mercenaryCharacter)
 	{
 		ParticipatedMercenarys.Add(mercenaryCharacter);

@@ -98,4 +98,6 @@ void UDungeonChoiceWnd::InitializeDCW(FName dcwCode)
 
 		ScrollBox_DungeonList->AddChild(dungeonRow);
 	}
+
+	//GetManager(UPlayerManager)->SetParticipateMercenary(MercenaryState->GetParticipatedMercenarys());
 }

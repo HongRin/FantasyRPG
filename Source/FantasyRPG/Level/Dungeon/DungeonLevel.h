@@ -13,6 +13,8 @@ private :
 	TSubclassOf<class UUserWidget> BP_ReturnToTown;
 
 private :
+	class UDataTable* DT_MercenaryBP;
+
 	TArray<class AMonsterCharacter*> MonsterCharacters;
 
 	bool ExistBossMonster;
@@ -20,10 +22,16 @@ private :
 public :
 	ADungeonLevel();
 
+protected :
+	virtual void BeginPlay() override;
+
 public :
 	bool DungeonClear();
 	
 	void ReturnToTown();
+
+private :
+	void SpawnMercenary();
 
 public :
 	FORCEINLINE void AddMonsterCharacters(class AMonsterCharacter* monsterCharacter)

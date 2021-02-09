@@ -144,9 +144,7 @@ void AMercenaryCharacter::InitializeMercenaryDataConstructTime()
 {
 	// Saves the Infomation that matches MonsterCode 
 	FString contextString;
-	FMercenaryInfo * mercenaryInfo = MercenaryDatatable->FindRow<FMercenaryInfo>(
-		MercenaryCode, contextString
-		);
+	FMercenaryInfo* mercenaryInfo = MercenaryDatatable->FindRow<FMercenaryInfo>(MercenaryCode, contextString);
 
 	// Check for information found
 	if (mercenaryInfo == nullptr)

@@ -62,7 +62,6 @@ FReply UItemSlot::NativeOnMouseButtonDown(
 {
 	FReply retVal = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
-
 	UE_LOG(LogTemp, Warning, TEXT("NativeOnMouseButtonDown Called!"));
 
 	// 슬롯이 비어있는지 확인합니다.

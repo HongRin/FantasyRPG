@@ -3,6 +3,7 @@
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
 #include "Single/GameInstance/FRGameInstance.h"
+#include "Single/PlayerManager/PlayerManager.h"
 
 #include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 

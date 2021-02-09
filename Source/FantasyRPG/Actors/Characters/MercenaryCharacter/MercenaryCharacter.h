@@ -120,7 +120,7 @@ public :
 
 	bool IsHealerMovable() const;
 
-	FORCEINLINE FMercenaryInfo* GetMercenaryInfo()
+	FMercenaryInfo* GetMercenaryInfo()
 	{ return &MercenaryInfo; }
 
 	FORCEINLINE class APlayerCharacter* GetPlayerCharacter() const
