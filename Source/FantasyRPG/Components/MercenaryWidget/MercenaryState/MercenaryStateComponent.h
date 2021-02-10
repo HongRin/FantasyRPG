@@ -16,12 +16,12 @@ private :
 	// 고용하고 있는 용병들을 나타냅니다.
 	TArray<FMercenarySlotInfo> ScoutMercenarys;
 
+	TArray<FMercenaryInfo> ScoutMercenaryInfo;
+
+	TArray<FMercenaryInfo> ParticipateInfo;
+
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 		TArray<class AMercenaryCharacter*> MercenaryActors;
-
-	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-		TArray<class AMercenaryCharacter*> ParticipatedMercenarys;
-
 
 	class UDataTable* DT_MercenaryInfo;
 
@@ -56,18 +56,12 @@ public :
 		return MercenaryActors;
 	}
 
-	FORCEINLINE const TArray<class AMercenaryCharacter*> GetParticipatedMercenarys() const
+	FORCEINLINE const TArray<FMercenaryInfo>& GetScoutMercenaryInfo() const
 	{
-		return ParticipatedMercenarys;
+		return ScoutMercenaryInfo;
 	}
-
-	FORCEINLINE void ParticipateMerecenary(AMercenaryCharacter* mercenaryCharacter)
+	FORCEINLINE TArray<FMercenaryInfo>& GetParticipateInfo()
 	{
-		ParticipatedMercenarys.Add(mercenaryCharacter);
-	}
-
-	FORCEINLINE void UnParticipateMerecenary(AMercenaryCharacter* mercenaryCharacter)
-	{
-		ParticipatedMercenarys.Remove(mercenaryCharacter);
+		return ParticipateInfo;
 	}
 };

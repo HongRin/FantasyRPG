@@ -41,7 +41,8 @@ void UParticipateRow::IsParitcipate(bool bIsChecked)
 			if (DungeonChoiceWnd->GetMercenaryState()->GetMercenaryActors()[i]->GetMercenaryInfo()->MercenaryCode == MercenaryCode)
 			{
 				AMercenaryCharacter* participateMerecenary = DungeonChoiceWnd->GetMercenaryState()->GetMercenaryActors()[i];
-				DungeonChoiceWnd->GetMercenaryState()->ParticipateMerecenary(participateMerecenary);
+				FMercenaryInfo mercenaryInfo = *participateMerecenary->GetMercenaryInfo();
+				DungeonChoiceWnd->GetMercenaryState()->GetParticipateInfo().Add(mercenaryInfo);
 			}
 		}
 	}
@@ -52,7 +53,7 @@ void UParticipateRow::IsParitcipate(bool bIsChecked)
 			if (DungeonChoiceWnd->GetMercenaryState()->GetMercenaryActors()[i]->GetMercenaryInfo()->MercenaryCode == MercenaryCode)
 			{
 				AMercenaryCharacter* participateMerecenary = DungeonChoiceWnd->GetMercenaryState()->GetMercenaryActors()[i];
-				DungeonChoiceWnd->GetMercenaryState()->UnParticipateMerecenary(participateMerecenary);
+				FMercenaryInfo mercenaryInfo = *participateMerecenary->GetMercenaryInfo();
 			}
 		}
 	}

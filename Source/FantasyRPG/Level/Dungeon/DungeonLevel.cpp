@@ -33,6 +33,7 @@ void ADungeonLevel::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SpawnMercenary();
 }
 
 bool ADungeonLevel::DungeonClear()
@@ -51,4 +52,33 @@ void ADungeonLevel::ReturnToTown()
 
 void ADungeonLevel::SpawnMercenary()
 {
+	FString contextString;
+
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetManager(UPlayerManager)->GetPlayerController()->GetPawn());
+
+	for (int i = 0; i < GetManager(UPlayerManager)->GetParticipateInfo().Num(); ++i)
+	{
+		FMercenaryBlueprint* mercenaryblueprint = DT_MercenaryBP->FindRow<FMercenaryBlueprint>(
+			GetManager(UPlayerManager)->GetParticipateInfo()[i].MercenaryCode, contextString);
+
+		UFRGameInstance* gameInst = Cast<UFRGameInstance>(GetWorld()->GetGameInstance());
+
+		UBlueprint* mercenaryBPClass = Cast<UBlueprint>(
+			gameInst->GetStreamableManager()->LoadSynchronous(mercenaryblueprint->BlueprintPath));
+
+
+		if (IsValid(mercenaryBPClass))
+		{
+			TSubclassOf<AMercenaryCharacter> bpInstClass =
+				static_cast<TSubclassOf<AMercenaryCharacter>>(mercenaryBPClass->GeneratedClass);
+
+			auto capsuleComponent = playerCharacter->GetCapsuleComponent();
+
+			AMercenaryCharacter* mercenaryCharacter =
+				GetWorld()->SpawnActor<AMercenaryCharacter>(
+					bpInstClass,
+					playerCharacter->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 3.0f * i)),
+					FRotator::ZeroRotator);
+		}
+	}
 }

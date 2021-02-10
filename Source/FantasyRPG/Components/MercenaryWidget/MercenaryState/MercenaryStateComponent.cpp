@@ -33,6 +33,7 @@ void UMercenaryStateComponent::BeginPlay()
 
 	GameInst = Cast<UFRGameInstance>(GetWorld()->GetGameInstance());
 
+	InitializeScoutMercenarys();
 }
 
 
@@ -44,7 +45,6 @@ void UMercenaryStateComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 void UMercenaryStateComponent::InitializeScoutMercenarys()
 {
-
 }
 
 void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
@@ -76,5 +76,7 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 				FRotator::ZeroRotator);
 
 		MercenaryActors.Add(mercenaryCharacter);
+
+		ScoutMercenaryInfo.Add(*mercenaryCharacter->GetMercenaryInfo());
 	}
 }

@@ -4,10 +4,12 @@
 
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
 #include "Actors/Controllers/PlayerController/RPGPlayerController.h"
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
 #include "Structures/DungeonRowInfo/DungeonRowInfo.h"
 
 #include "Components/PlayerInventory/PlayerInventoryComponent.h"
+#include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 
 #include "Single/GameInstance/FRGameInstance.h"
 #include "Single/PlayerManager/PlayerManager.h"
@@ -52,8 +54,11 @@ void UDungeonRow::InitializeDungeonRow(FName dungeonCode)
 void UDungeonRow::ClickEnterDungeonButton()
 {
 	UPlayerManager* playerManger = GetManager(UPlayerManager);
-	UPlayerInventoryComponent* playerInventory = Cast<APlayerCharacter>(playerManger->GetPlayerController()->GetPawn())->GetPlayerInventory();
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(playerManger->GetPlayerController()->GetPawn());
+	UPlayerInventoryComponent* playerInventory = playerCharacter->GetPlayerInventory();
+	UMercenaryStateComponent* mercenaryState = playerCharacter->GetMercenaryState();
 	playerManger->SetPlayerInventoryItems(playerInventory->GetInventoryItems());
+	playerManger->SetParticipateInfo(mercenaryState->GetParticipateInfo());
 
 	Cast<UFRGameInstance>(GetGameInstance())->SetNextLevelName(NextDungeonName);
 	UGameplayStatics::OpenLevel(this, FName(TEXT("LoadingLevel")));

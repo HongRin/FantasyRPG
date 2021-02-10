@@ -23,7 +23,7 @@ private:
 
     TArray<FItemSlotInfo> InventoryItems;
 
-    TArray<AMercenaryCharacter> Participates;
+    TArray<FMercenaryInfo> ParticipateInfo;
     
 public:
     virtual void InitManagerClass() override;
@@ -42,5 +42,15 @@ public:
     FORCEINLINE TArray<FItemSlotInfo>& GetInventoryItems()
     {
         return InventoryItems;
+    }
+
+    FORCEINLINE void SetParticipateInfo(TArray<FMercenaryInfo> participateInfo)
+    {
+        ParticipateInfo = participateInfo;
+    }
+
+    FORCEINLINE TArray<FMercenaryInfo>& GetParticipateInfo()
+    {
+        return ParticipateInfo;
     }
 };
