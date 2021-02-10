@@ -39,6 +39,7 @@ void UPlayerInventoryComponent::BeginPlay()
 	InitializeInventoryItems();
 
 	ClosableWndController = (GetManager(UPlayerManager)->GetPlayerController())->GetClosableWndControllerComponent();
+
 }
 
 
@@ -61,18 +62,14 @@ void UPlayerInventoryComponent::InitializeInventoryItems()
 	FPlayerInfo* playerInfo = playerManager->GetPlayerInfo();
 
 	for (int i = 0; i < playerInfo->InventorySlotConut; ++i)
-		InventoryItems.Add(FItemSlotInfo());
+			InventoryItems.Add(FItemSlotInfo());
 
-	// -- TEST CODE --
-	AddItem(FName(TEXT("40001")), 11);
-	AddItem(FName(TEXT("40002")), 12);
-	AddItem(FName(TEXT("50001")), 1);
-	AddItem(FName(TEXT("50002")), 1);
-	AddItem(FName(TEXT("50003")), 1);
-	AddItem(FName(TEXT("50004")), 1);
+	for (int i = 0; i < playerManager->GetInventoryItems().Num(); ++i)
+	{
+		if (!playerManager->GetInventoryItems()[i].ItemCode.IsNone())
+			AddItem(playerManager->GetInventoryItems()[i].ItemCode, playerManager->GetInventoryItems()[i].ItemCount);
+	}
 
-	RemoveItem(0, 1);
-	RemoveItem(1, 2);
 }
 
 void UPlayerInventoryComponent::UpdateEquipItemState(EEquipItemType equipitemType)
@@ -176,6 +173,8 @@ bool UPlayerInventoryComponent::AddItem(FName itemCode, int32 itemCount)
 
 	if (OnInventorySlotChanged.IsBound())
 		OnInventorySlotChanged.Broadcast();
+
+
 
 	// 아이템 추가 성공
 	return true;

@@ -2,9 +2,15 @@
 
 #include "Engine/DataTable.h"
 
+#include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
+#include "Actors/Controllers/PlayerController/RPGPlayerController.h"
+
 #include "Structures/DungeonRowInfo/DungeonRowInfo.h"
 
+#include "Components/PlayerInventory/PlayerInventoryComponent.h"
+
 #include "Single/GameInstance/FRGameInstance.h"
+#include "Single/PlayerManager/PlayerManager.h"
 
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
@@ -45,6 +51,10 @@ void UDungeonRow::InitializeDungeonRow(FName dungeonCode)
 
 void UDungeonRow::ClickEnterDungeonButton()
 {
+	UPlayerManager* playerManger = GetManager(UPlayerManager);
+	UPlayerInventoryComponent* playerInventory = Cast<APlayerCharacter>(playerManger->GetPlayerController()->GetPawn())->GetPlayerInventory();
+	playerManger->SetPlayerInventoryItems(playerInventory->GetInventoryItems());
+
 	Cast<UFRGameInstance>(GetGameInstance())->SetNextLevelName(NextDungeonName);
 	UGameplayStatics::OpenLevel(this, FName(TEXT("LoadingLevel")));
 }

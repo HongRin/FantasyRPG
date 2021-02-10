@@ -7,6 +7,8 @@
 #include "Actors/Controllers/PlayerController/RPGPlayerController.h"
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
+#include "Components/PlayerInventory/PlayerInventoryComponent.h"
+
 #include "Single/GameInstance/FRGameInstance.h"
 #include "Single/PlayerManager/PlayerManager.h"
 
@@ -40,6 +42,10 @@ bool ADungeonLevel::DungeonClear()
 
 void ADungeonLevel::ReturnToTown()
 {
+	UPlayerManager* playerManger = GetManager(UPlayerManager);
+	UPlayerInventoryComponent* playerInventory = Cast<APlayerCharacter>(playerManger->GetPlayerController()->GetPawn())->GetPlayerInventory();
+	playerManger->SetPlayerInventoryItems(playerInventory->GetInventoryItems());
+
 	CreateWidget<UUserWidget>(GetWorld(), BP_ReturnToTown)->AddToViewport();
 }
 

@@ -5,6 +5,7 @@
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 #include "Single/ManagerClass/ManagerClass.h"
 #include "Structures/MercenaryInfo/MercenaryInfo.h"
+#include "Structures/ItemSlotInfo/ItemSlotInfo.h"
 #include "PlayerManager.generated.h"
 
 UCLASS()
@@ -20,9 +21,10 @@ private:
     UPROPERTY()
     class ARPGPlayerController* PlayerController;
 
-    UPROPERTY()
-    TArray<AMercenaryCharacter> ParticipateMercenary;
+    TArray<FItemSlotInfo> InventoryItems;
 
+    TArray<AMercenaryCharacter> Participates;
+    
 public:
     virtual void InitManagerClass() override;
 
@@ -32,13 +34,13 @@ public:
 
     class ARPGPlayerController* GetPlayerController();
 
-    FORCEINLINE void SetParticipateMercenary(TArray<AMercenaryCharacter> participateMercenary)
+    FORCEINLINE void SetPlayerInventoryItems(TArray<FItemSlotInfo> inventoryItems)
     {
-        ParticipateMercenary = participateMercenary;
+        InventoryItems = inventoryItems;
     }
 
-    FORCEINLINE const TArray<AMercenaryCharacter> GetParticipateMercenary() const
+    FORCEINLINE TArray<FItemSlotInfo>& GetInventoryItems()
     {
-        return ParticipateMercenary;
+        return InventoryItems;
     }
 };
