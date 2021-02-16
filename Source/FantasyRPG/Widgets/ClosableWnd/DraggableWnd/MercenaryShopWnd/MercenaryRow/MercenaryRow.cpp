@@ -47,7 +47,5 @@ void UMercenaryRow::UpdateMercenaryRow(FMercenaryInfo* mercenaryInfo)
 void UMercenaryRow::OnScoutButtonClicked()
 {
 	MercenaryState->ScoutMercenary(MercenaryInfo->MercenaryCode);
-	GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
-		GetMercenaryHpWnd()->AddMercenaryHpList(MercenaryInfo);
 	RemoveFromParent();
 }

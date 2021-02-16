@@ -23,6 +23,9 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 		TArray<class AMercenaryCharacter*> MercenaryActors;
 
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+		TArray<class AMercenaryCharacter*> ParticipateActors;
+
 	class UDataTable* DT_MercenaryInfo;
 
 	class UDataTable* DT_MercenaryBP;
@@ -56,12 +59,27 @@ public :
 		return MercenaryActors;
 	}
 
+	FORCEINLINE const TArray<class AMercenaryCharacter*> GetParticipateActors() const
+	{
+		return ParticipateActors;
+	}
+
+	FORCEINLINE void AddParticipateActors(class AMercenaryCharacter* mercenaryCharacter)
+	{
+		ParticipateActors.Add(mercenaryCharacter);
+	}
+
 	FORCEINLINE const TArray<FMercenaryInfo>& GetScoutMercenaryInfo() const
 	{
 		return ScoutMercenaryInfo;
 	}
+
 	FORCEINLINE TArray<FMercenaryInfo>& GetParticipateInfo()
 	{
 		return ParticipateInfo;
+	}
+	FORCEINLINE TArray<FMercenaryInfo>& GetScoutMercenaryInfo()
+	{
+		return ScoutMercenaryInfo;
 	}
 };

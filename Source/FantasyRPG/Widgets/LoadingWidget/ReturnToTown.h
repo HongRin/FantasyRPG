@@ -12,6 +12,8 @@ class FANTASYRPG_API UReturnToTown : public UUserWidget
 private :
 	class UTextBlock* Text_Loading;
 	
+private :
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Return Time", meta = (AllowPrivateAccess = "true"))
 	int32 Time;
 
 protected :

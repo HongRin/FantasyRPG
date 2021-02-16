@@ -20,7 +20,7 @@ protected :
 	virtual void NativeConstruct() override;
 
 public :
-	void InitializeMercenaryHpRow(FMercenaryInfo* mercenaryInfo);
+	void InitializeMercenaryHpRow(FMercenaryInfo* mercenaryInfo, int32 type);
 	
 	void UpdateMercenaryHp();
 

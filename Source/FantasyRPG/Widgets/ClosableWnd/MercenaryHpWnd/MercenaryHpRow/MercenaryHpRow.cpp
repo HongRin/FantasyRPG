@@ -21,18 +21,31 @@ void UMercenaryHpRow::NativeConstruct()
 	ProgressBar_Hp = Cast<UProgressBar>(GetWidgetFromName(TEXT("ProgressBar_Hp")));
 }
 
-void UMercenaryHpRow::InitializeMercenaryHpRow(FMercenaryInfo* mercenaryInfo)
+void UMercenaryHpRow::InitializeMercenaryHpRow(FMercenaryInfo* mercenaryInfo, int32 type)
 {
 	Text_Name->SetText(mercenaryInfo->MercenaryName);
 
 	UMercenaryStateComponent* mercenaryState = Cast<APlayerCharacter>(GetManager(UPlayerManager)->
 		GetPlayerController()->GetPawn())->GetMercenaryState();
 	
-	for (int i = 0; i < mercenaryState->GetMercenaryActors().Num(); ++i)
+	if (type == 1)
 	{
-		if (mercenaryInfo->MercenaryCode == mercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo()->MercenaryCode)
+		for (int i = 0; i < mercenaryState->GetMercenaryActors().Num(); ++i)
 		{
-			MercenaryCharacter = mercenaryState->GetMercenaryActors()[i];
+			if (mercenaryInfo->MercenaryCode == mercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo()->MercenaryCode)
+			{
+				MercenaryCharacter = mercenaryState->GetMercenaryActors()[i];
+			}
+		}
+	}
+	else if (type == 2)
+	{
+		for (int i = 0; i < mercenaryState->GetParticipateActors().Num(); ++i)
+		{
+			if (mercenaryInfo->MercenaryCode == mercenaryState->GetParticipateActors()[i]->GetMercenaryInfo()->MercenaryCode)
+			{
+				MercenaryCharacter = mercenaryState->GetParticipateActors()[i];
+			}
 		}
 	}
 

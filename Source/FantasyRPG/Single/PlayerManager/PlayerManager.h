@@ -23,6 +23,8 @@ private:
 
     TArray<FItemSlotInfo> InventoryItems;
 
+    TArray<FMercenaryInfo> MercenaryInfo;
+
     TArray<FMercenaryInfo> ParticipateInfo;
     
 public:
@@ -42,6 +44,16 @@ public:
     FORCEINLINE TArray<FItemSlotInfo>& GetInventoryItems()
     {
         return InventoryItems;
+    }
+
+    FORCEINLINE void SetMercenaryInfo(TArray<FMercenaryInfo> mercenaryInfo)
+    {
+        MercenaryInfo = mercenaryInfo;
+    }
+
+    FORCEINLINE TArray<FMercenaryInfo>& GetMercenaryInfo()
+    {
+        return MercenaryInfo;
     }
 
     FORCEINLINE void SetParticipateInfo(TArray<FMercenaryInfo> participateInfo)

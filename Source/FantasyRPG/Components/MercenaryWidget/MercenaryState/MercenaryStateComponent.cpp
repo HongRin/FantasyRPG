@@ -4,9 +4,15 @@
 #include "Engine/EngineTypes.h"
 
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
+#include "Actors/Controllers/PlayerController/RPGPlayerController.h"
+
 
 #include "Single/GameInstance/FRGameInstance.h"
 #include "Single/PlayerManager/PlayerManager.h"
+
+#include "Widgets/ClosableWnd/DraggableWnd/MercenaryShopWnd/MercenaryShopWnd.h"
+#include "Widgets/HpableCharacterWidget/PlayerCharacterWidget/PlayerCharacterWidget.h"
+#include "Widgets/ClosableWnd/MercenaryHpWnd/MercenaryHpWnd.h"
 
 #include "Structures/MercenaryBlueprint/MercenaryBlueprint.h"
 
@@ -45,6 +51,17 @@ void UMercenaryStateComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 void UMercenaryStateComponent::InitializeScoutMercenarys()
 {
+	if (GameInst->GetNextLevelName().IsNone()) return;
+
+	UPlayerManager* playerManager = GetManager(UPlayerManager);
+
+	if (playerManager->GetMercenaryInfo().Num() == 0) return;
+
+	if (GameInst->GetNextLevelName() == FName(TEXT("GameMap")))
+	{
+		for (int i = 0; i < playerManager->GetMercenaryInfo().Num(); ++i)
+			ScoutMercenary(playerManager->GetMercenaryInfo()[i].MercenaryCode);
+	}
 }
 
 void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
@@ -78,5 +95,8 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 		MercenaryActors.Add(mercenaryCharacter);
 
 		ScoutMercenaryInfo.Add(*mercenaryCharacter->GetMercenaryInfo());
+
+		GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
+			GetMercenaryHpWnd()->AddMercenaryHpList(mercenaryCharacter->GetMercenaryInfo(), 1);
 	}
 }

@@ -30,5 +30,5 @@ protected :
 	virtual void NativeConstruct() override;
 
 public :
-	void AddMercenaryHpList(FMercenaryInfo* mercenaryInfo);
+	void AddMercenaryHpList(FMercenaryInfo* mercenaryInfo, int32 type);
 };

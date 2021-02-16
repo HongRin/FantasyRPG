@@ -8,9 +8,14 @@
 #include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 
 #include "Components/PlayerInventory/PlayerInventoryComponent.h"
+#include "Components/MercenaryWidget/MercenaryState/MercenaryStateComponent.h"
 
 #include "Single/GameInstance/FRGameInstance.h"
 #include "Single/PlayerManager/PlayerManager.h"
+
+#include "Widgets/ClosableWnd/DraggableWnd/MercenaryShopWnd/MercenaryShopWnd.h"
+#include "Widgets/HpableCharacterWidget/PlayerCharacterWidget/PlayerCharacterWidget.h"
+#include "Widgets/ClosableWnd/MercenaryHpWnd/MercenaryHpWnd.h"
 
 #include "Structures/MercenaryBlueprint/MercenaryBlueprint.h"
 #include "Structures/MercenaryInfo/MercenaryInfo.h"
@@ -79,6 +84,16 @@ void ADungeonLevel::SpawnMercenary()
 					bpInstClass,
 					playerCharacter->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 3.0f * i)),
 					FRotator::ZeroRotator);
+
+
+			UMercenaryStateComponent* mercenaryState = Cast<APlayerCharacter>(GetManager(UPlayerManager)->
+				GetPlayerController()->GetPawn())->GetMercenaryState();
+
+			mercenaryState->AddParticipateActors(mercenaryCharacter);
+
+			GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
+				GetMercenaryHpWnd()->AddMercenaryHpList(mercenaryCharacter->GetMercenaryInfo(), 2);
+
 		}
 	}
 }

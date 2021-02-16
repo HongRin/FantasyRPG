@@ -29,11 +29,11 @@ void UMercenaryHpWnd::NativeConstruct()
 	MercenaryState = Cast<APlayerCharacter>(GetManager(UPlayerManager)->GetPlayerController()->GetPawn())->GetMercenaryState();
 }
 
-void UMercenaryHpWnd::AddMercenaryHpList(FMercenaryInfo* mercenaryInfo)
+void UMercenaryHpWnd::AddMercenaryHpList(FMercenaryInfo* mercenaryInfo, int32 type)
 {
 	UMercenaryHpRow* mercenaryHpRow = CreateWidget<UMercenaryHpRow>(this, BP_MercenaryHpRow);
 
 	VerticalBox_List->AddChild(mercenaryHpRow);
 	mercenaryHpRow->SetMercenaryHpWnd(this);
-	mercenaryHpRow->InitializeMercenaryHpRow(mercenaryInfo);
+	mercenaryHpRow->InitializeMercenaryHpRow(mercenaryInfo, type);
 }
