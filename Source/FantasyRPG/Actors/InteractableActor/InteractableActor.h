@@ -38,5 +38,4 @@ public:
 protected:
 	virtual void Interaction() PURE_VIRTUAL(AInteractableActor::Interaction, );
 
-
 };

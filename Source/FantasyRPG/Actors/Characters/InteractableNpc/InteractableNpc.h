@@ -14,6 +14,8 @@ private:
 	TSubclassOf<class UShopWnd> ShopWndClass;
 	TSubclassOf<class UMercenaryShopWnd> MercenaryShopWndClass;
 
+	class UDataTable* DT_NPCDialogInfo;
+
 private:
 	UPROPERTY()
 		class UFRGameInstance* GameInst;
@@ -21,10 +23,15 @@ private:
 	UPROPERTY()
 		class UPlayerManager* PlayerManager;
 
+
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 		FName NpcCode;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+		FText NpcName;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Type")
 		EShopType ShopType;
 
