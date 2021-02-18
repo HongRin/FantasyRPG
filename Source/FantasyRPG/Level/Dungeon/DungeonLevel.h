@@ -38,5 +38,5 @@ public :
 	{ MonsterCharacters.Add(monsterCharacter); }
 
 	FORCEINLINE void RemoveMonsterCharacters(class AMonsterCharacter* monsterCharacter)
-	{ MonsterCharacters.Remove(monsterCharacter); }
+	{ MonsterCharacters.Remove(monsterCharacter); };
 };

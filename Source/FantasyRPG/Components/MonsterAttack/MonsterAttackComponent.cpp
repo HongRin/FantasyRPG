@@ -56,7 +56,7 @@ void UMonsterAttackComponent::ActiveMonsterAttackRange()
 	FMonsterInfo* monsterInfo = MonsterCharacter->GetMonsterInfo();
 	
 	float attackRange = (AttackState == MONSTER_ATTACK_BASIC && MonsterCharacter->ActorHasTag("BsMonster")) ? 
-		monsterInfo->AtkRange : monsterInfo->AtkRange * 2.5f;
+		monsterInfo->AtkRange : monsterInfo->AtkRange * 2.0f;
 
 	FVector start = (AttackState == MONSTER_ATTACK_BASIC && MonsterCharacter->ActorHasTag("BsMonster")) ?
 		MonsterCharacter->GetActorLocation() : MonsterCharacter->GetActorLocation() - FVector((attackRange / 2), (attackRange / 2), 0.0f);

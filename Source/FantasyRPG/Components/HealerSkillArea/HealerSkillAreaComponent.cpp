@@ -18,6 +18,8 @@
 UHealerSkillAreaComponent::UHealerSkillAreaComponent()
 {
 	SphereRadius = 200.0f;
+
+	SetHiddenInGame(false);
 }
 
 void UHealerSkillAreaComponent::BeginPlay()

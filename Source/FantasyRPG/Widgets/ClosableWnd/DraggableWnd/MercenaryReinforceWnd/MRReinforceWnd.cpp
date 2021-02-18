@@ -63,17 +63,10 @@ void UMRReinforceWnd::InitializeButtonList()
 
 	for (int i = 0; i < MercenaryState->GetScoutMercenarys().Num(); ++i)
 	{
-		FString contextString;
-
-		FMercenaryInfo* mercenaryInfo = DT_MercenaryInfo->FindRow<FMercenaryInfo>(
-			MercenaryState->GetScoutMercenarys()[i].MercenaryCode, contextString);
-
 		UButtonList* buttonList = CreateWidget<UButtonList>(this, BP_ButtonList);
 		ScrollBox_ButtonList->AddChild(buttonList);
 		buttonList->SetMRReinforceWnd(this);
-		buttonList->InitializeButtonList(mercenaryInfo);
-
-		UE_LOG(LogTemp, Warning, TEXT("GetMercenaryActors()[%d] :: Atk  :: %.1f"), i, MercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo()->Atk);
+		buttonList->InitializeButtonList(&MercenaryState->GetScoutMercenaryInfo()[i]);
 	}
 }
 

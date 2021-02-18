@@ -121,6 +121,12 @@ void UHealerReinforce::HealerReinforceClicked()
 			mercenaryInfo->BuffAtkFigure = MercenaryReinforceInfo->BuffAtkFigure;
 
 			UpdateHealerReinforce(mercenaryInfo);
+
+			for (int i = 0; i < mercenaryState->GetMercenaryActors().Num(); ++i)
+			{
+				if (mercenaryState->GetScoutMercenaryInfo()[i].MercenaryType == EMercenaryType::MCT_HEALER)
+					mercenaryState->GetScoutMercenaryInfo()[i] = *mercenaryInfo;
+			}
 		}
 	}
 }

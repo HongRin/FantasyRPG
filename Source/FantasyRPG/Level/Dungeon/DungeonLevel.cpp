@@ -43,7 +43,9 @@ void ADungeonLevel::BeginPlay()
 
 bool ADungeonLevel::DungeonClear()
 {
-	return (MonsterCharacters.Num() == 0);
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetManager(UPlayerManager)->GetPlayerController()->GetPawn());
+
+	return (MonsterCharacters.Num() == 0 || playerCharacter->IsDied());
 }
 
 void ADungeonLevel::ReturnToTown()

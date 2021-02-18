@@ -39,6 +39,8 @@ APlayerCharacter::APlayerCharacter()
 
 	bIsMoveable = true;
 
+	bIsDied = false;
+
 	GetCharacterMovement()->JumpZVelocity = 500;
 
 	LoadAsset();
@@ -135,6 +137,15 @@ float APlayerCharacter::GetHp()
 void APlayerCharacter::SetHp(float value)
 {
 	GetPlayerManager()->GetPlayerInfo()->Hp = value;
+}
+
+void APlayerCharacter::OnCharacterDie()
+{
+	Super::OnCharacterDie();
+
+	bIsMoveable = false;
+
+	bIsDied = true;
 }
 
 

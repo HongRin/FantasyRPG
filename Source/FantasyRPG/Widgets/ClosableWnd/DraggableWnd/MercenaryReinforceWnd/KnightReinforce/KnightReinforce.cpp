@@ -102,6 +102,12 @@ void UKnightReinforce::KnightReinforceClicked()
 			mercenaryInfo->Atk = MercenaryReinforceInfo->Atk;
 			mercenaryInfo->SkillPercentage = MercenaryReinforceInfo->SkillPercentage;
 			UpdateKingitReinforce(mercenaryInfo);
+
+			for (int i = 0; i < mercenaryState->GetMercenaryActors().Num(); ++i)
+			{
+				if (mercenaryState->GetScoutMercenaryInfo()[i].MercenaryType == EMercenaryType::MCT_KNIGHT)
+					mercenaryState->GetScoutMercenaryInfo()[i] = *mercenaryInfo;
+			}
 		}
 	}
 }

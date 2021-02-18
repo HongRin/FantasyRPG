@@ -68,7 +68,17 @@ void AMercenaryCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const
 
 void AMercenaryCharacter::OnCharacterDie()
 {
+	Super::OnCharacterDie();
 
+	FString reason;
+	Cast<AMercenaryController>(GetController())->GetBrainComponent()->StopLogic(reason);
+
+	FTimerHandle timerHandle;
+	GetWorld()->GetTimerManager().SetTimer(
+		timerHandle,
+		[this]() { Destroy(); },
+		3.0f,
+		false);
 }
 
 void AMercenaryCharacter::InitializeComponent()
@@ -153,11 +163,24 @@ void AMercenaryCharacter::InitializeMercenaryDataConstructTime()
 		return;
 	}
 
+
 	// Saves the MonsterInfo
-	MercenaryInfo = (*mercenaryInfo);
+	UPlayerManager* playerManager = GetManager(UPlayerManager);
+	if (playerManager->GetMercenaryInfo().Num() != 0)
+	{
+		for (int i = 0; i < playerManager->GetMercenaryInfo().Num(); ++i)
+		{
+			if (mercenaryInfo->MercenaryCode == playerManager->GetMercenaryInfo()[i].MercenaryCode)
+			{
+				MercenaryInfo = playerManager->GetMercenaryInfo()[i];
+			}
+		}
+	}
+	else
+		MercenaryInfo = (*mercenaryInfo);
 
 	// Set up the Hp
-	Hp = MaxHp = mercenaryInfo->MaxHp;
+	Hp = MaxHp = MercenaryInfo.MaxHp;
 
 	// SkeletalMesh Initialization
 	InitializeSkeletalMeshComponent();

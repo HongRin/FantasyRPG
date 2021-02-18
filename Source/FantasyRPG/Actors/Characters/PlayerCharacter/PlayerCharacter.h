@@ -81,6 +81,8 @@ private :
 	bool bIsMoveable;
 
 	bool bIsRunState;
+
+	bool bIsDied;
 #pragma endregion
 public:
 	APlayerCharacter();
@@ -105,6 +107,8 @@ public:
 	virtual float GetMaxHp() override;
 	virtual float GetHp() override;
 	virtual void SetHp(float value) override;
+
+	virtual void OnCharacterDie() override;
 
 private :
 	void LoadAsset();
@@ -185,4 +189,9 @@ public :
 
 	FORCEINLINE class UMercenaryStateComponent* GetMercenaryState() const
 	{ return MercenaryState; }
+
+	FORCEINLINE bool IsDied() const
+	{
+		return bIsDied;
+	}
 };

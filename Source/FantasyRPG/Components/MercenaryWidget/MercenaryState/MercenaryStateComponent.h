@@ -7,12 +7,12 @@
 #include "MercenaryStateComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FANTASYRPG_API UMercenaryStateComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-private :
+private:
 	// 고용하고 있는 용병들을 나타냅니다.
 	TArray<FMercenarySlotInfo> ScoutMercenarys;
 
@@ -32,23 +32,23 @@ private :
 
 	class UFRGameInstance* GameInst;
 
-public:	
+public:
 	UMercenaryStateComponent();
 
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
 	// 용병을 초기화합니다.
 	void InitializeScoutMercenarys();
 
-public :
+public:
 	void ScoutMercenary(FName mercenaryCode);
 
-public :
+public:
 	FORCEINLINE const TArray<FMercenarySlotInfo>& GetScoutMercenarys() const
 	{
 		return ScoutMercenarys;
@@ -69,7 +69,7 @@ public :
 		ParticipateActors.Add(mercenaryCharacter);
 	}
 
-	FORCEINLINE const TArray<FMercenaryInfo>& GetScoutMercenaryInfo() const
+	FORCEINLINE TArray<FMercenaryInfo>& GetScoutMercenaryInfo()
 	{
 		return ScoutMercenaryInfo;
 	}
@@ -77,9 +77,5 @@ public :
 	FORCEINLINE TArray<FMercenaryInfo>& GetParticipateInfo()
 	{
 		return ParticipateInfo;
-	}
-	FORCEINLINE TArray<FMercenaryInfo>& GetScoutMercenaryInfo()
-	{
-		return ScoutMercenaryInfo;
 	}
 };

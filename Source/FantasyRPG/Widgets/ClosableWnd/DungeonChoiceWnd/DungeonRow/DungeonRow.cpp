@@ -61,7 +61,6 @@ void UDungeonRow::ClickEnterDungeonButton()
 	playerManager->SetParticipateInfo(mercenaryState->GetParticipateInfo());
 	playerManager->SetMercenaryInfo(mercenaryState->GetScoutMercenaryInfo());
 
-
 	Cast<UFRGameInstance>(GetGameInstance())->SetNextLevelName(NextDungeonName);
 	UGameplayStatics::OpenLevel(this, FName(TEXT("LoadingLevel")));
 }

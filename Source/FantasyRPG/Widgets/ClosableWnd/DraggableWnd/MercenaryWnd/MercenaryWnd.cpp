@@ -52,27 +52,59 @@ void UMercenaryWnd::NativeConstruct()
 
 void UMercenaryWnd::InitializeMercenaryWnd()
 {
-	if (MercenaryState->GetMercenaryActors().Num() == 0) return;
-	for (int i = 0; i < MercenaryState->GetMercenaryActors().Num(); ++i)
+	if (MercenaryState->GetMercenaryActors().Num() == 0 && MercenaryState->GetParticipateActors().Num() == 0) return;
+
+	UFRGameInstance* gameInst = Cast<UFRGameInstance>(GetWorld()->GetGameInstance());
+
+	if (gameInst->GetNextLevelName() == FName(TEXT("MSDungeon")) || gameInst->GetNextLevelName() == FName(TEXT("MGDungeon")))
 	{
-		FString contextString;
-		FMercenaryInfo* mercenaryInfo = MercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo();
-
-		if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_HEALER)
+		UE_LOG(LogTemp, Warning, TEXT("MSDungeon"));
+		for (int i = 0; i < MercenaryState->GetParticipateActors().Num(); ++i)
 		{
-			UHealerState* helaerState = CreateWidget<UHealerState>(this, BP_HealerState);
-			
-			ScrollBox_MercenaryList->AddChild(helaerState);
+			FString contextString;
+			FMercenaryInfo* mercenaryInfo = MercenaryState->GetParticipateActors()[i]->GetMercenaryInfo();
 
-			helaerState->UpdateHealerState(mercenaryInfo);
+			if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_HEALER)
+			{
+				UHealerState* helaerState = CreateWidget<UHealerState>(this, BP_HealerState);
+
+				ScrollBox_MercenaryList->AddChild(helaerState);
+
+				helaerState->UpdateHealerState(mercenaryInfo);
+			}
+			else if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_KNIGHT)
+			{
+				UKnightState* knightState = CreateWidget<UKnightState>(this, BP_KnightState);
+
+				ScrollBox_MercenaryList->AddChild(knightState);
+
+				knightState->UpdateKnightState(mercenaryInfo);
+			}
 		}
-		else if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_KNIGHT)
+	}
+	else
+	{
+		for (int i = 0; i < MercenaryState->GetMercenaryActors().Num(); ++i)
 		{
-			UKnightState* knightState = CreateWidget<UKnightState>(this, BP_KnightState);
-			
-			ScrollBox_MercenaryList->AddChild(knightState);
+			FString contextString;
+			FMercenaryInfo* mercenaryInfo = MercenaryState->GetMercenaryActors()[i]->GetMercenaryInfo();
 
-			knightState->UpdateKnightState(mercenaryInfo);
+			if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_HEALER)
+			{
+				UHealerState* helaerState = CreateWidget<UHealerState>(this, BP_HealerState);
+
+				ScrollBox_MercenaryList->AddChild(helaerState);
+
+				helaerState->UpdateHealerState(mercenaryInfo);
+			}
+			else if (mercenaryInfo->MercenaryType == EMercenaryType::MCT_KNIGHT)
+			{
+				UKnightState* knightState = CreateWidget<UKnightState>(this, BP_KnightState);
+
+				ScrollBox_MercenaryList->AddChild(knightState);
+
+				knightState->UpdateKnightState(mercenaryInfo);
+			}
 		}
 	}
 }

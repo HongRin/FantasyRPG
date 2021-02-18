@@ -2,11 +2,11 @@
 
 FPlayerInfo::FPlayerInfo()
 {
-	Atk = 400.0f;
+	Atk = 200.0f;
 	Hp = MaxHp = 999.0f;
 	Def = 30.0f;
 	Mp = MaxMp = 200.0f;
-	StatPoint = 5;
+	StatPoint = 50;
 	InventorySlotConut = 20;
 	Money = 10000;
 }
