@@ -20,7 +20,7 @@ private:
 		class UTextBlock* Text_Dialog;
 
 protected :
-	virtual void NativeOnInitialized() override;
+	virtual void NativeConstruct() override;
 
 public:
 	void SetOwnerNpc(class AInteractableNpc* ownerNpc);

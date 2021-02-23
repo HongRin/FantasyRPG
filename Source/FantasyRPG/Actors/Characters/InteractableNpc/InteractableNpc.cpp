@@ -94,7 +94,6 @@ void AInteractableNpc::OpenDialogWidget()
 	{
 		UE_LOG(LogTemp, Error, TEXT("InteractableNpc.cpp :: %d LINE :: closableDialogWndAsset is not loaded!"), __LINE__);
 	}
-	
 }
 
 void AInteractableNpc::Interaction()

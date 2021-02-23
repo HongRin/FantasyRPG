@@ -5,12 +5,11 @@
 
 #include "Components/Button.h"
 
-void UClosableDialogWnd::NativeOnInitialized()
+void UClosableDialogWnd::NativeConstruct()
 {
-	Super::NativeOnInitialized();
+	Super::NativeConstruct();
 
 	WndSize = FVector2D(1920.0, 1080.0f);
-
 }
 
 void UClosableDialogWnd::SetOwnerNpc(AInteractableNpc* ownerNpc)
