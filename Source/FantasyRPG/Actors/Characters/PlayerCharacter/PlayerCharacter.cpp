@@ -58,6 +58,7 @@ void APlayerCharacter::BeginPlay()
 
 	Tags.Add(TEXT("Player"));
 
+	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -75.0f), FRotator(0.0f, -90.0f, 0.0f));
 }
 
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)

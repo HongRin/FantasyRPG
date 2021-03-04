@@ -6,6 +6,8 @@
 #include "Widgets/ClosableWnd/MercenaryHpWnd/MercenaryHpWnd.h"
 #include "Widgets/ClosableWnd/ClosableWnd.h"
 
+#include "Components/TextBlock.h"
+
 void UPlayerCharacterWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -32,4 +34,9 @@ void UPlayerCharacterWidget::RemoveClosableWnd(UClosableWnd* closableWnd)
 
 	if (closableWnd->onWndClosed.IsBound())
 		closableWnd->onWndClosed.Broadcast();
+}
+
+void UPlayerCharacterWidget::SetLog(FText Log)
+{
+	Text_Log->SetText(Log);
 }

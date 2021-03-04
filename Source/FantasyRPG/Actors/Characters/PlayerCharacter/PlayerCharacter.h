@@ -35,6 +35,7 @@ private :
 	class UPlayerWndControllerComponent* PlayerWndController;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PlayerWndController", meta = (AllowPrivateAccess = "true"))
 	class UMercenaryStateComponent* MercenaryState;
+
 #pragma endregion
 
 #pragma region SKeletalMeshes

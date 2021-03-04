@@ -1,7 +1,6 @@
 #include "DungeonPortal.h"
 
 #include "Actors/Characters/PlayerCharacter/PlayerCharacter.h"
-#include "Actors/Controllers/PlayerController/RPGPlayerController.h"
 
 #include "Components/ClosableWndController/ClosableWndControllerComponent.h"
 
@@ -56,7 +55,7 @@ void ADungeonPortal::OnPortalOverlap(UPrimitiveComponent* OverlappedComponent,
 
 		if (playerCharacter->GetCapsuleComponent() == OtherComp)
 		{
-			UDungeonChoiceWnd* dungeonChoiceWnd = playerCharacter->GetPlayerController()->GetClosableWndControllerComponent()->AddWnd<UDungeonChoiceWnd>(BP_DungeonChoiceWnd);
+			UDungeonChoiceWnd* dungeonChoiceWnd = GetManager(UPlayerManager)->GetPlayerController()->GetClosableWndControllerComponent()->AddWnd<UDungeonChoiceWnd>(BP_DungeonChoiceWnd);
 			dungeonChoiceWnd->InitializeDCW(DCWCode);
 			playerCharacter->ProhibitMove();
 

@@ -1,6 +1,8 @@
 #include "InteractableNpc.h"
 #include "Engine/DataTable.h"
 
+#include "Actors/Controllers/PlayerController/RPGPlayerController.h"
+
 #include "Components/ClosableWndController/ClosableWndControllerComponent.h"
 #include "Components/CharacterWidget/CharacterWidgetComponent.h"
 
@@ -19,6 +21,11 @@
 
 AInteractableNpc::AInteractableNpc()
 {
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_DIALOG_INFO(
+		TEXT("DataTable'/Game/Resources/DataTables/DT_DialogInfo.DT_DialogInfo'"));
+	if (DT_DIALOG_INFO.Succeeded()) DT_NPCDialogInfo = DT_DIALOG_INFO.Object;
+	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: DT_DIALOG_INFO is not loaded!"), __LINE__); }
+
 	static ConstructorHelpers::FObjectFinder<UDataTable> ST_SHOP_INFO(
 		TEXT("DataTable'/Game/Resources/DataTables/DT_ShopInfo.DT_ShopInfo'"));
 	if (ST_SHOP_INFO.Succeeded()) DT_ShopInfo = ST_SHOP_INFO.Object;
@@ -34,11 +41,6 @@ AInteractableNpc::AInteractableNpc()
 	if (BP_MR_SHOP_WND.Succeeded()) MercenaryShopWndClass = BP_MR_SHOP_WND.Class;
 	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: BP_MR_SHOP_WND is not loaded!"), __LINE__); }
 
-	static ConstructorHelpers::FObjectFinder<UDataTable> DT_DIALOG_INFO(
-		TEXT("DataTable'/Game/Resources/DataTables/DT_DialogInfo.DT_DialogInfo'"));
-	if (ST_SHOP_INFO.Succeeded()) DT_NPCDialogInfo = DT_DIALOG_INFO.Object;
-	else { UE_LOG(LogTemp, Error, TEXT("AInteractableNpc.cpp :: %d LINE :: DT_DIALOG_INFO is not loaded!"), __LINE__); }
-
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SKELETAL_MESH_COMPONENT"));
 	InteractCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("INTERACT_CAMERA"));
 
@@ -51,7 +53,7 @@ void AInteractableNpc::BeginPlay()
 	Super::BeginPlay();
 
 	GameInst = Cast<UFRGameInstance>(GetGameInstance());
-	PlayerManager = GameInst->GetManagerClass<UPlayerManager>();
+	PlayerManager = GetManager(UPlayerManager);
 
 	Cast<UCharacterWidget>(CharacterWidget->GetUserWidgetObject())->SetNameText(NpcName);
 }
@@ -68,15 +70,16 @@ void AInteractableNpc::OpenDialogWidget()
 	//closableNpcWndPath.Append(TEXT("."));
 	//closableNpcWndPath.Append(closableNpcDialogAssetName);
 
+	PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("OpenDialog Call !")));
+
 	FString contextString;
 
-	FNPCDialogInfo* dialogInfo = DT_NPCDialogInfo->FindRow<FNPCDialogInfo>(NpcCode, contextString);
+	FNPCDialogInfo dialogInfo = *DT_NPCDialogInfo->FindRow<FNPCDialogInfo>(NpcCode, contextString);
 
 	// 위젯 블루프린트 애셋 로드
 	UBlueprint* closableDialogWndAsset = Cast<UBlueprint>(
-		GameInst->GetStreamableManager()->LoadSynchronous(
-			FSoftObjectPath(dialogInfo->DialogClassPath)));
-	
+		GameInst->GetStreamableManager()->LoadSynchronous(dialogInfo.DialogClassPath));
+
 	if (IsValid(closableDialogWndAsset))
 	{
 		TSubclassOf<UClosableDialogWnd> bpClosableDialog =
@@ -87,12 +90,17 @@ void AInteractableNpc::OpenDialogWidget()
 			AddWnd<UClosableDialogWnd>(bpClosableDialog);
 		
 		dialogWnd->SetOwnerNpc(this);
-		dialogWnd->UpdateText(dialogInfo->MonsterName, dialogInfo->NPCDialog);
+		dialogWnd->UpdateText(dialogInfo.MonsterName, dialogInfo.NPCDialog);
 		dialogWnd->UpdateWndSize(1920.0f, 1080.0f);
+
+		PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("Add DialogWnd !")));
+
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("InteractableNpc.cpp :: %d LINE :: closableDialogWndAsset is not loaded!"), __LINE__);
+
+		PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("closableDialogWndAsset is not loaded!")));
 	}
 }
 

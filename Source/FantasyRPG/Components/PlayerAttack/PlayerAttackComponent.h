@@ -41,6 +41,7 @@ public:
 
 private :
 	void LoadAsset();
+
 public :
 	void LRegularAttack();
 	void RRegularAttack();

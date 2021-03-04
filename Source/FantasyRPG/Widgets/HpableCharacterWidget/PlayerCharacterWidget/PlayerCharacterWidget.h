@@ -14,6 +14,10 @@ private:
 	class UMercenaryHpWnd* BP_MercenaryHpWnd;
 	class UProgressBar* ProgressBar_HP;
 
+	// 로그 문
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* Text_Log;
+
 protected:
 	virtual void NativeOnInitialized() override;
 
@@ -31,4 +35,8 @@ public:
 	{
 		return BP_MercenaryHpWnd;
 	}
+
+
+	// 로그 셋팅
+	void SetLog(FText Log);
 };
