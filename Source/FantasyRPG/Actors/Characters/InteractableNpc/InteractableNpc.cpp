@@ -17,8 +17,6 @@
 #include "Widgets/ClosableWnd/DraggableWnd/MercenaryShopWnd/MercenaryShopWnd.h"
 #include "Components/CanvasPanelSlot.h"
 
-
-
 AInteractableNpc::AInteractableNpc()
 {
 	static ConstructorHelpers::FObjectFinder<UDataTable> DT_DIALOG_INFO(
@@ -70,15 +68,23 @@ void AInteractableNpc::OpenDialogWidget()
 	//closableNpcWndPath.Append(TEXT("."));
 	//closableNpcWndPath.Append(closableNpcDialogAssetName);
 
-	PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("OpenDialog Call !")));
-
 	FString contextString;
 
-	FNPCDialogInfo dialogInfo = *DT_NPCDialogInfo->FindRow<FNPCDialogInfo>(NpcCode, contextString);
+	FNPCDialogInfo* dialogInfo = DT_NPCDialogInfo->FindRow<FNPCDialogInfo>(NpcCode, contextString);
 
+	UClosableDialogWnd* dialogWnd =
+		PlayerManager->GetPlayerController()->GetClosableWndControllerComponent()->
+		//AddWnd<UClosableDialogWnd>(bpClosableDialog);
+		AddWnd<UClosableDialogWnd>(dialogInfo->DialogClass);
+
+	dialogWnd->SetOwnerNpc(this);
+	dialogWnd->UpdateText(dialogInfo->MonsterName, dialogInfo->NPCDialog);
+	dialogWnd->UpdateWndSize(1920.0f, 1080.0f);
+
+	/*
 	// 위젯 블루프린트 애셋 로드
 	UBlueprint* closableDialogWndAsset = Cast<UBlueprint>(
-		GameInst->GetStreamableManager()->LoadSynchronous(dialogInfo.DialogClassPath));
+		GameInst->GetStreamableManager()->LoadSynchronous(dialogInfo->DialogClassPath));
 
 	if (IsValid(closableDialogWndAsset))
 	{
@@ -87,21 +93,22 @@ void AInteractableNpc::OpenDialogWidget()
 		
 		UClosableDialogWnd* dialogWnd =
 			PlayerManager->GetPlayerController()->GetClosableWndControllerComponent()->
-			AddWnd<UClosableDialogWnd>(bpClosableDialog);
+			//AddWnd<UClosableDialogWnd>(bpClosableDialog);
+			AddWnd<UClosableDialogWnd>(dialogInfo->DialogClass);
 		
 		dialogWnd->SetOwnerNpc(this);
-		dialogWnd->UpdateText(dialogInfo.MonsterName, dialogInfo.NPCDialog);
+		dialogWnd->UpdateText(dialogInfo->MonsterName, dialogInfo->NPCDialog);
 		dialogWnd->UpdateWndSize(1920.0f, 1080.0f);
 
-		PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("Add DialogWnd !")));
-
+		//PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("Add DialogWnd !")));
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("InteractableNpc.cpp :: %d LINE :: closableDialogWndAsset is not loaded!"), __LINE__);
 
-		PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("closableDialogWndAsset is not loaded!")));
+		//PlayerManager->GetPlayerController()->GetPlayerCharacterWidgetInstance()->SetLog(FText::FromString(TEXT("closableDialogWndAsset is not loaded!")));
 	}
+	*/
 }
 
 void AInteractableNpc::Interaction()

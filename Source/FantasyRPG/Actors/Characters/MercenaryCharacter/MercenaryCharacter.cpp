@@ -49,6 +49,8 @@ void AMercenaryCharacter::BeginPlay()
 	InitializeMercenaryDataConstructTime();
 
 	Tags.Add(TEXT("Mercenary"));
+
+	LoadMercenaryInfo();
 }
 
 void AMercenaryCharacter::Tick(float DeltaTime)
@@ -108,13 +110,6 @@ void AMercenaryCharacter::InitializeSkeletalMeshComponent()
 	auto mercenaryMesh = Cast<USkeletalMesh>(
 		GameInst->GetStreamableManager()->LoadSynchronous(MercenaryInfo.SkeletalMeshPath));
 
-	// Anim Blueprint Asset Load
-	UBlueprint* mercenaryAnimInstClass = Cast<UBlueprint>(
-		GameInst->GetStreamableManager()->LoadSynchronous(MercenaryInfo.AnimInstanceClassPath));
-
-	UBlueprint* mercenaryControllerInstClass = Cast<UBlueprint>(
-		GameInst->GetStreamableManager()->LoadSynchronous(MercenaryInfo.MercenaryControllerClassPath));
-
 	if (IsValid(mercenaryMesh))
 	{
 		// Apply the loaded SkeletalMesh
@@ -127,27 +122,34 @@ void AMercenaryCharacter::InitializeSkeletalMeshComponent()
 	}
 	else
 		UE_LOG(LogTemp, Error, TEXT("AMonsterCharacter.cpp :: %d LINE :: mercenaryMesh is not loaded!"), __LINE__);
-	if (IsValid(mercenaryAnimInstClass))
-	{
-		// Cast as the AnimInstanceClass
-		TSubclassOf<UMercenaryAnimInstance> bpAnimInstClass =
-			static_cast<TSubclassOf<UMercenaryAnimInstance>>(mercenaryAnimInstClass->GeneratedClass);
-
-		// Apply AnimInstanceClass
-		GetMesh()->SetAnimClass(bpAnimInstClass);
-	}
-	if (IsValid(mercenaryControllerInstClass))
-	{
-		TSubclassOf<AAIController> bpControllerInstClass =
-			static_cast<TSubclassOf<AAIController>>(mercenaryControllerInstClass->GeneratedClass);
-
-		AIControllerClass = bpControllerInstClass;
-	}
+	
+	GetMesh()->SetAnimClass(MercenaryInfo.AnimInstanceClassPath);
+	AIControllerClass = MercenaryInfo.MercenaryControllerClassPath;
 }
 
 void AMercenaryCharacter::SetMoveSpeed()
 {
 	GetCharacterMovement()->MaxWalkSpeed = PlayerCharacter->GetCharacterMovement()->MaxWalkSpeed - 50.0f;
+}
+
+void AMercenaryCharacter::LoadMercenaryInfo()
+{
+	FString contextString;
+	FMercenaryInfo* mercenaryInfo = MercenaryDatatable->FindRow<FMercenaryInfo>(MercenaryCode, contextString);
+
+	UPlayerManager* playerManager = GetManager(UPlayerManager);
+	if (playerManager->GetMercenaryInfo().Num() != 0)
+	{
+		for (int i = 0; i < playerManager->GetMercenaryInfo().Num(); ++i)
+		{
+			if (mercenaryInfo->MercenaryCode == playerManager->GetMercenaryInfo()[i].MercenaryCode)
+			{
+				MercenaryInfo = playerManager->GetMercenaryInfo()[i];
+
+				Hp = MaxHp = MercenaryInfo.MaxHp;
+			}
+		}
+	}
 }
 
 void AMercenaryCharacter::InitializeMercenaryDataConstructTime()
@@ -163,21 +165,7 @@ void AMercenaryCharacter::InitializeMercenaryDataConstructTime()
 		return;
 	}
 
-
-	// Saves the MonsterInfo
-	UPlayerManager* playerManager = GetManager(UPlayerManager);
-	if (playerManager->GetMercenaryInfo().Num() != 0)
-	{
-		for (int i = 0; i < playerManager->GetMercenaryInfo().Num(); ++i)
-		{
-			if (mercenaryInfo->MercenaryCode == playerManager->GetMercenaryInfo()[i].MercenaryCode)
-			{
-				MercenaryInfo = playerManager->GetMercenaryInfo()[i];
-			}
-		}
-	}
-	else
-		MercenaryInfo = (*mercenaryInfo);
+	MercenaryInfo = (*mercenaryInfo);
 
 	// Set up the Hp
 	Hp = MaxHp = MercenaryInfo.MaxHp;

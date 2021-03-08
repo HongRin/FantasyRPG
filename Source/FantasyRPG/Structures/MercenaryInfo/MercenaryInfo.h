@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "Enums/MercenaryType.h"
+#include "AnimInstances/MercenaryCharacter/MercenaryAnimInstance.h"
+#include "Actors/Controllers/MercenaryController/MercenaryController.h"
 #include "MercenaryInfo.generated.h"
 
 USTRUCT()
@@ -21,10 +23,10 @@ public:
 	FSoftObjectPath SkeletalMeshPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FSoftObjectPath AnimInstanceClassPath;
+	TSubclassOf<UMercenaryAnimInstance> AnimInstanceClassPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FSoftObjectPath MercenaryControllerClassPath;
+	TSubclassOf<AAIController> MercenaryControllerClassPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FSoftObjectPath MercernaryIcon;

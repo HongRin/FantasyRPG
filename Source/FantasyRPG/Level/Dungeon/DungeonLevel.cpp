@@ -70,32 +70,21 @@ void ADungeonLevel::SpawnMercenary()
 
 		UFRGameInstance* gameInst = Cast<UFRGameInstance>(GetWorld()->GetGameInstance());
 
-		UBlueprint* mercenaryBPClass = Cast<UBlueprint>(
-			gameInst->GetStreamableManager()->LoadSynchronous(mercenaryblueprint->BlueprintPath));
+		auto capsuleComponent = playerCharacter->GetCapsuleComponent();
+
+		AMercenaryCharacter* mercenaryCharacter =
+			GetWorld()->SpawnActor<AMercenaryCharacter>(
+				mercenaryblueprint->MercenaryBlueprint,
+				playerCharacter->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 3.0f * i)),
+				FRotator::ZeroRotator);
 
 
-		if (IsValid(mercenaryBPClass))
-		{
-			TSubclassOf<AMercenaryCharacter> bpInstClass =
-				static_cast<TSubclassOf<AMercenaryCharacter>>(mercenaryBPClass->GeneratedClass);
+		UMercenaryStateComponent* mercenaryState = Cast<APlayerCharacter>(GetManager(UPlayerManager)->
+			GetPlayerController()->GetPawn())->GetMercenaryState();
 
-			auto capsuleComponent = playerCharacter->GetCapsuleComponent();
+		mercenaryState->AddParticipateActors(mercenaryCharacter);
 
-			AMercenaryCharacter* mercenaryCharacter =
-				GetWorld()->SpawnActor<AMercenaryCharacter>(
-					bpInstClass,
-					playerCharacter->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 3.0f * i)),
-					FRotator::ZeroRotator);
-
-
-			UMercenaryStateComponent* mercenaryState = Cast<APlayerCharacter>(GetManager(UPlayerManager)->
-				GetPlayerController()->GetPawn())->GetMercenaryState();
-
-			mercenaryState->AddParticipateActors(mercenaryCharacter);
-
-			GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
-				GetMercenaryHpWnd()->AddMercenaryHpList(mercenaryCharacter->GetMercenaryInfo(), 2);
-
-		}
+		GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
+			GetMercenaryHpWnd()->AddMercenaryHpList(mercenaryCharacter->GetMercenaryInfo(), 2);
 	}
 }

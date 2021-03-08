@@ -75,28 +75,18 @@ void UMercenaryStateComponent::ScoutMercenary(FName mercenaryCode)
 
 	ScoutMercenarys.Add(FMercenarySlotInfo(mercenaryCode));
 
-	UBlueprint* mercenaryBPClass = Cast<UBlueprint>(
-		GameInst->GetStreamableManager()->LoadSynchronous(mercenaryblueprint->BlueprintPath));
+	auto capsuleComponent = Cast<ACharacter>(GetOwner())->GetCapsuleComponent();
 
-	if (IsValid(mercenaryBPClass))
-	{
-		// Cast as the AnimInstanceClass
-		TSubclassOf<AMercenaryCharacter> bpInstClass =
-			static_cast<TSubclassOf<AMercenaryCharacter>>(mercenaryBPClass->GeneratedClass);
-	
-		auto capsuleComponent = Cast<ACharacter>(GetOwner())->GetCapsuleComponent();
+	AMercenaryCharacter* mercenaryCharacter =
+		GetWorld()->SpawnActor<AMercenaryCharacter>(
+			mercenaryblueprint->MercenaryBlueprint,
+			GetOwner()->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 2.0f)),
+			FRotator::ZeroRotator);
 
-		AMercenaryCharacter* mercenaryCharacter =
-			GetWorld()->SpawnActor<AMercenaryCharacter>(
-			bpInstClass, 
-				GetOwner()->GetActorLocation() + (FVector::BackwardVector * (capsuleComponent->GetScaledCapsuleHalfHeight() * 2.0f)),
-				FRotator::ZeroRotator);
+	MercenaryActors.Add(mercenaryCharacter);
 
-		MercenaryActors.Add(mercenaryCharacter);
+	ScoutMercenaryInfo.Add(*mercenaryCharacter->GetMercenaryInfo());
 
-		ScoutMercenaryInfo.Add(*mercenaryCharacter->GetMercenaryInfo());
-
-		GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
-			GetMercenaryHpWnd()->AddMercenaryHpList(mercenaryCharacter->GetMercenaryInfo(), 1);
-	}
+	GetManager(UPlayerManager)->GetPlayerController()->GetPlayerCharacterWidgetInstance()->
+		GetMercenaryHpWnd()->AddMercenaryHpList(mercenaryCharacter->GetMercenaryInfo(), 1);
 }

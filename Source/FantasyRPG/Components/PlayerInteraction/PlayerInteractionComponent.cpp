@@ -52,6 +52,7 @@ void UPlayerInteractionComponent::TryInteraction()
 	InteractableActors[0]->StartInteraction(interactionFinEvent);
 	bIsInteracting = true;
 
+	if(!InteractableActors[0]->ActorHasTag("DropItem"))
 	PlayerCharacter->GetPlayerController()->ChangeViewTarget(InteractableActors[0]);
 }
 

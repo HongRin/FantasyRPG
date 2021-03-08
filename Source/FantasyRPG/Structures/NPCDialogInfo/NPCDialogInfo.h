@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
+
+#include "Widgets/ClosableWnd/ClosableDialogWnd/ClosableDialogWnd.h"
 #include "NPCDialogInfo.generated.h"
 
 
@@ -19,7 +21,8 @@ public :
 	FText MonsterName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FSoftObjectPath DialogClassPath;
+	TSubclassOf<UClosableDialogWnd> DialogClass;
+	//FSoftObjectPath DialogClassPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FText NPCDialog;

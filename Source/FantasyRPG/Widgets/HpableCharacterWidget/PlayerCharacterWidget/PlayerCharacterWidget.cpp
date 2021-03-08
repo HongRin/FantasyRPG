@@ -35,8 +35,3 @@ void UPlayerCharacterWidget::RemoveClosableWnd(UClosableWnd* closableWnd)
 	if (closableWnd->onWndClosed.IsBound())
 		closableWnd->onWndClosed.Broadcast();
 }
-
-void UPlayerCharacterWidget::SetLog(FText Log)
-{
-	Text_Log->SetText(Log);
-}

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
+#include "Actors/Characters/MercenaryCharacter/MercenaryCharacter.h"
 #include "MercenaryBlueprint.generated.h"
 
 USTRUCT()
@@ -14,5 +15,5 @@ public :
 	FName MercenaryCode;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FSoftObjectPath BlueprintPath;
+	TSubclassOf<AMercenaryCharacter> MercenaryBlueprint;
 };

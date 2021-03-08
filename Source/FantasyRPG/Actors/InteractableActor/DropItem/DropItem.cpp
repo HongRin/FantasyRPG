@@ -53,6 +53,8 @@ void ADropItem::BeginPlay()
 	Capsule->SetCollisionProfileName(TEXT("DropItemCollision"));
 
 	Cast<UCharacterWidget>(CharacterWidget->GetUserWidgetObject())->SetNameText(FText::FromString(TEXT(" ")));
+
+	Tags.Add(TEXT("DropItem"));
 }
 
 void ADropItem::Tick(float DeltaTime)

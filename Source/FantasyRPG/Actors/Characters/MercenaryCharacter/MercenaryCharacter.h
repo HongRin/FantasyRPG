@@ -77,6 +77,8 @@ private :
 private :
 	void SetMoveSpeed();
 
+	void LoadMercenaryInfo();
+
 public :
 	// MonsterData Initialization
 	UFUNCTION(BlueprintCallable)
