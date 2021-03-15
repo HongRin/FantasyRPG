@@ -17,7 +17,7 @@ void UReturnToTown::NativeConstruct()
 			--Time;
 			if (Time == 0)
 			{
-				Cast<UFRGameInstance>(GetGameInstance())->SetNextLevelName(FName(TEXT("GameMap")));
+				Cast<UFRGameInstance>(GetGameInstance())->SetNextLevelName(FName(TEXT("MapGame")));
 				UGameplayStatics::OpenLevel(this, FName(TEXT("LoadingLevel")));
 			}
 		},
